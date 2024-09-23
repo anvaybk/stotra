@@ -9,7 +9,13 @@
     <title>Home - Shree Sukta</title>
 </head>
 <body>
-    <header>
+<script>
+   // Additional code for service worker
+	 if (typeof navigator.serviceWorker !== 'undefined') {
+         navigator.serviceWorker.register('serviceworker.js')
+         }
+  </script> 
+	<header>
         <nav class="navbar">
             <div class="logo">
                 <a href="index.html">॥ श्रीसूक्त ॥</a>
