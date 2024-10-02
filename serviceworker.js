@@ -1,6 +1,6 @@
 const CACHE_NAME = 'site-cache-v1';
 const CACHE_LIFETIME = 3 * 24 * 60 * 60 * 1000; // 3 days in milliseconds
-const urlsToCache = ['/', '/index.html', '/about.html', '/contact.html', /* other resources */];
+const urlsToCache = ['/', '/index.html'  /*, '/about.html', '/contact.html',  other resources */];
 
 self.addEventListener('install', event => {
     event.waitUntil(
