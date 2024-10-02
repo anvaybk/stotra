@@ -16,7 +16,15 @@
     <link rel="stylesheet" href="css/styles.css">
     <title>Shree Suktam</title>
 </head>
-<body>
+<body> 
+   <script>
+   // Additional code for service worker
+	 if (typeof navigator.serviceWorker !== 'undefined') {
+         navigator.serviceWorker.register('serviceworker.js')
+        // navigator.serviceWorker.register('sw.js')	
+        // navigator.serviceWorker.register('PWA-Basic-service-worker.js')		 
+  }
+  </script> 	
     <header>
         <nav class="navbar">
             <div class="logo">
