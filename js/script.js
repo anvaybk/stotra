@@ -62,3 +62,55 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     }
 });
+
+// JavaScript to disable right-click context menu globally and on a specific section
+document.addEventListener('DOMContentLoaded', function() {
+    // Disable right-click context menu globally
+    document.body.addEventListener('contextmenu', function(e) {
+        e.preventDefault();
+    });
+
+    // Disable right-click context menu on a specific section
+    const sectionElement = document.getElementById('youDivSectionId');
+    if (sectionElement) {
+        sectionElement.addEventListener('contextmenu', function(e) {
+            e.preventDefault();
+        });
+    }
+    
+    // Disable cut, copy, and paste actions
+    document.addEventListener('cut', function(e) {
+        e.preventDefault();
+    });
+    document.addEventListener('copy', function(e) {
+        e.preventDefault();
+    });
+    document.addEventListener('paste', function(e) {
+        e.preventDefault();
+    });
+
+    // Disable certain key combinations
+    document.addEventListener('keydown', function(event) {
+        // Disable F12 (Developer Tools)
+        if (event.keyCode === 123) {
+            event.preventDefault();
+        }
+        // Disable Ctrl+U (View Page Source), Ctrl+A (Select All), Ctrl+S (Save)
+        if (event.ctrlKey && (event.keyCode === 85 || event.keyCode === 83 || event.keyCode === 65)) {
+            event.preventDefault();
+        }
+        // Disable Ctrl+Shift+I (Developer Tools)
+        if (event.ctrlKey && event.shiftKey && event.keyCode === 73) {
+            event.preventDefault();
+        }
+        // Disable Ctrl+P (Print)
+        if (event.ctrlKey && event.keyCode === 80) {
+            event.preventDefault();
+        }
+        // Disable Ctrl+V (Paste)
+        if (event.ctrlKey && event.keyCode === 86) {
+            event.preventDefault();
+        }
+    });
+});
+
