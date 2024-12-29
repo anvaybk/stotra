@@ -1,18 +1,18 @@
 {
   "name": "Shree Suktam",
-  "id": "/shreesukta/",
-  "short_name": "shreesukta",
+  "id": "/stotra/",
+  "short_name": "stotra",
   "start_url": ".",
   "display": "standalone",
   "background_color": "#a52a2a",
   "orientation": "any",
   "scope": "/",
-  "description": " Shree Suktam, श्री सूक्तम् . ",
+  "description": "Stotra, देवी अष्टक, श्रीसूक्त स्तोत्र, महिषासुरमर्दिनि स्तोत्र, श्री ज्ञानेश्वरी पारायण प्रार्थना, स्तोत्र संग्रह, Devi Ashtak, shreesukta, mahishasurmardini, dnyeshwari, Shree Suktam, श्री सूक्तम् . ",
   "version": "1.0.0.0",
   "theme_color": "#000000",
    "developer": {
     "name": "Anvay B Kulkarni",
-    "url": "https://anvaybk.github.io/shreesukta/"
+    "url": "https://anvaybk.github.io/stotra/"
   },
   "icons": [
     {
@@ -188,13 +188,13 @@
   "related_applications": [
     {
       "platform": "windows",
-      "url": "https://anvaybk.github.io/shreesukta/",
-      "id": "gurucharitra"
+      "url": "https://anvaybk.github.io/stotra/",
+      "id": "stotra"
     },
     {
       "platform": "play",
-      "url": "https://play.google.com/store/apps/details?id=io.github.anvaybk.gurucharitra.twa",
-      "id": "io.github.anvaybk.gurucharitra.twa"
+      "url": "https://play.google.com/store/apps/details?id=io.github.anvaybk.stotra.twa",
+      "id": "io.github.anvaybk.stotra.twa"
     }
   ],
   "dir": "ltr",
