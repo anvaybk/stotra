@@ -21,6 +21,12 @@
     <title> स्तोत्र संग्रह मुखपृष्ठ - Stotra Home </title>
 </head>
 <body> 
+<script>
+   // Additional code for service worker
+	 if (typeof navigator.serviceWorker !== 'undefined') {
+         navigator.serviceWorker.register('serviceworker.js')
+         }
+  </script>	
   <header>
         <nav class="navbar">
             <div class="logo">
