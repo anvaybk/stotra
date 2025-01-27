@@ -1,31 +1,110 @@
 // Last updated on 27012025
 
 const CACHE_NAME = 'stotra-v1.0.0.0';
-const CACHE_LIFETIME = 3 * 24 * 60 * 60 * 1000; // 3 days in milliseconds
 const INITIAL_CACHED_RESOURCES = [
         "/", // Cache the root URL
         "/index.html", // Cache HTML file
         "/css/styles.css", // Cache CSS file
         "/css/homestyles",
         "/js/script.js", // Cache JavaScript file
-        "/images/Ashtak-Renuka-Mata-Menu.jpg",
-        "/images/Dnyeshwar-Maharaj.jpg",
-		"/images/Shree-Sukta-Tuljabhavani-Mata-Menu.jpg",
-		"/images/mahishasurmardini-Mata-Menu.jpg",
-        "/pages/ashtak.html",
-		"/pages/dnyeshwari.html",
-		"/pages/mahishasurmardini.html",
-		"/pages/shreesukta.html",
-		"/pages/about.html",
-		"/pages/contact.html"
-	
+        "/images/shree_gurucharitra_saramrut.jpg",
+        "/images/shree_gurucharitra_saramrut.webp",
+        "/chapters.html",
+        "/home.html",
+	"/nityapathhome.html",
+        "/pages/chapters1.html",
+        "/pages/chapters2.html",
+        "/pages/chapters3.html",
+        "/pages/chapters4.html",
+        "/pages/chapters5.html",
+        "/pages/chapters6.html",
+        "/pages/chapters7.html",
+        "/pages/chapters8.html",
+        "/pages/chapters9.html",
+        "/pages/chapters10.html",
+        "/pages/chapters11.html",
+        "/pages/chapters12.html",
+        "/pages/chapters13.html",
+        "/pages/chapters14.html",
+        "/pages/chapters15.html",
+        "/pages/chapters16.html",
+        "/pages/sankalp.html",
+        "/pages/shreedattamantra.html",
+        "/pages/saptahikparayan.html",
+        "/pages/socialmedia.html",
+        "/pages/annualevents.html",
+        "/pages/videogallery.html",
+        "/pages/audiogallery.html",
+        "/pages/photogallery.html",
+        "/pages/sangeetsevaparayan.html",
+        "/pages/visheshsevaparayan.html",
+        "/pages/granthvachanseva.html",
+        "/pages/donations.html",
+	"/pages/gurucharitra-audio-gallery.html",
+	"/pages/kathamrutnondani.html",
+	"/pages/nityapath1.html",
+	"/pages/nityapath2.html",
+	"/pages/nityapath3.html",
+	"/pages/nityapath4.html",
+	"/pages/nityapath5.html",
+	"/pages/nityapath6.html",
+	"/pages/nityapath7.html",
+	"/pages/nityapath8.html",
+	"/pages/nityapath9.html",
+	"/pages/nityapath10.html",
+	"/pages/nityapath11.html",
+	"/pages/nityapath12.html",
+	"/pages/nityapath13.html",
+	"/pages/nityapath14.html",
+	"/pages/nityapath15.html",
+	"/pages/nityapath16.html",
+	"/pages/nityapath17.html",
+	"/pages/nityapath18.html",
+	"/pages/nityapath19.html",
+	"/pages/nityapath-bhiksha.html",
+	"/pages/nityapath-bhiksha1.html",
+	"/pages/nityapath-bhiksha2.html",
+	"/images/YTube-Icon-40x40.png",
+        "/images/Instagram-Icon-40x40.png",
+        "/images/Whatsapp-Icon-40x40.png",
+        "/images/Google-maps-Icon-40x40.png",
+        "/images/Facebook-Icon-40x40.png",
+        "/images/Granth-Vachan-Icon-40x40.png",
+        "/images/Registration-Icon-40x40.png",
+        "/images/Video-Gallery-Icon-40x40.png",
+        "/images/Audio-Gallery-Icon-40x40.png",
+        "/images/Photo-Gallery-Icon-40x40.png",
+        "/images/Social-Media-Icon-40x40.png",
+        "/images/AnnualEvent-Icon-40x40.png",
+        "/images/Donations-Icon-40x40.png",
+        "/images/ContactUs-Icon-40x40.png",
+	"/images/Audio-Sangrah-Icon-60x60.png",
+	"/images/Google_play_store.svg",
+	"/images/icon-256x256.png",
+        "/images/hd-datta_photo1.jpg", // Cache images
+	"/audios/Gurucharitra-Adhyay-1.mp3",
+	"/audios/Gurucharitra-Adhyay-2.mp3",
+	"/audios/Gurucharitra-Adhyay-3.mp3",
+	"/audios/Gurucharitra-Adhyay-4.mp3",
+	"/audios/Gurucharitra-Adhyay-5.mp3",
+	"/audios/Gurucharitra-Adhyay-6.mp3",
+	"/audios/Gurucharitra-Adhyay-7.mp3",
+	"/audios/Gurucharitra-Adhyay-8.mp3",
+	"/audios/Gurucharitra-Adhyay-9.mp3",
+	"/audios/Gurucharitra-Adhyay-10.mp3",
+	"/audios/Gurucharitra-Adhyay-11.mp3",
+	"/audios/Gurucharitra-Adhyay-12.mp3",
+	"/audios/Gurucharitra-Adhyay-13.mp3",
+	"/audios/Gurucharitra-Adhyay-14.mp3",
+	"/audios/Gurucharitra-Adhyay-15.mp3",
+	"/audios/Gurucharitra-Adhyay-16.mp3"
 ];
 // Cached resources that match the following strings should not be periodically updated.
 // These are the tips html pages themselves, and their images.
 // Everything else, we try to update on a regular basis, to make sure lists of tips get updated and css/js are recent too.
-// const DONT_UPDATE_RESOURCES = [
-//     '/videos/'
-// '/audios/'
+const DONT_UPDATE_RESOURCES = [
+    '/videos/'
+    // '/audios/'
 ];
 
 self.addEventListener('install', event => {
@@ -148,9 +227,3 @@ async function findCacheEntriesToBeRefreshed() {
         return !DONT_UPDATE_RESOURCES.some(pattern => request.url.includes(pattern));
     });
 }
-
-setInterval(() => {
-    caches.delete(CACHE_NAME).then(() => {
-        caches.open(CACHE_NAME).then(cache => cache.addAll(INITIAL_CACHED_RESOURCES));
-    });
-}, CACHE_LIFETIME);
