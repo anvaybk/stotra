@@ -27,6 +27,10 @@ function goToHomePage() {
      window.location.href = 'index.html';
 }
 
+function goToIndexPage() {
+     window.location.href = '../index.html';
+}
+
 function goToRegistrationHomePage() {
      window.location.href = '../registrations.html';
 }
