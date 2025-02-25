@@ -33,6 +33,12 @@ window.dataLayer = window.dataLayer || [];
 	<title> स्तोत्र संग्रह मुखपृष्ठ - Stotra Home </title>	
     
 </head>
+<script>
+   // Additional code for service worker
+	 if (typeof navigator.serviceWorker !== 'undefined') {
+         navigator.serviceWorker.register('serviceworker.js')
+         }
+</script>
 <body>
 	<div class="container-heading" oncontextmenu="return false;">
         <h1> || स्तोत्र संग्रह मुखपृष्ठ  || </h1> 
