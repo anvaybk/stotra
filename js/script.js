@@ -1,67 +1,39 @@
+// script.js
 
-// Toggle Hamburger Menu
-document.addEventListener('DOMContentLoaded', function() {
-    const navToggle = document.getElementById('nav-toggle');
-    const navMenu = document.querySelector('.nav-menu');
-
-    navToggle.addEventListener('change', function() {
-        navMenu.classList.toggle('open');
-    });
-});
-
-// Service Worker Registration
-if ('serviceWorker' in navigator) {
-    window.addEventListener('load', function() {
-        navigator.serviceWorker.register('serviceworker.js')
-            .then(function(registration) {
-                console.log('Service Worker registered with scope:', registration.scope);
-            })
-            .catch(function(error) {
-                console.log('Service Worker registration failed:', error);
-            });
-    });
-};
-
-
-
-// Service Worker Registration
-if ('serviceWorker' in navigator) {
-    window.addEventListener('load', function() {
-        navigator.serviceWorker.register('serviceworker.js')
-            .then(function(registration) {
-                console.log('Service Worker registered with scope:', registration.scope);
-            })
-            .catch(function(error) {
-                console.log('Service Worker registration failed:', error);
-            });
-    });
+// Functions
+function startReading() {
+    window.location.href = 'home.html';
+     // window.location.href = 'chapters.html';
 }
 
-// Form Submission to Email
-document.addEventListener('DOMContentLoaded', function() {
-    const contactForm = document.querySelector('form');
-    if (contactForm) {
-        contactForm.addEventListener('submit', function(event) {
-            event.preventDefault();
-            const formData = new FormData(contactForm);
-            fetch(contactForm.action, {
-                method: 'POST',
-                body: formData,
-                headers: { 'Accept': 'application/json' }
-            }).then(response => {
-                if (response.ok) {
-                    alert('Your message has been sent successfully!');
-                    contactForm.reset();
-                } else {
-                    alert('There was a problem sending your message. Please try again later.');
-                }
-            }).catch(error => {
-                console.error('Error:', error);
-                alert('There was a problem sending your message. Please try again later.');
-            });
-        });
-    }
-});
+function goToChapter(chapterUrl) {
+    window.location.href = chapterUrl;
+}
+
+function goToHome() {
+   // window.location.href = '../home.html';
+   // window.location.href = '../index.html';
+      window.location.href = '../chapters.html';
+}
+
+function goToMainHome() {
+    window.location.href = '../home.html';
+   // window.location.href = '../index.html';
+   //	  window.location.href = '../chapters.html';
+}
+
+
+function goToHomePage() {
+     window.location.href = 'index.html';
+}
+
+function goToRegistrationHomePage() {
+     window.location.href = '../registrations.html';
+}
+
+function goToNityaPathHome() {
+     window.location.href = '../nityapathhome.html';
+}
 
 // JavaScript to disable right-click context menu globally and on a specific section
 document.addEventListener('DOMContentLoaded', function() {
@@ -114,3 +86,64 @@ document.addEventListener('DOMContentLoaded', function() {
     });
 });
 
+
+// Get all audio elements for Audio Gallery
+const audioElements = document.querySelectorAll('audio');
+// Add event listener for each audio element
+audioElements.forEach(audio => {
+    audio.addEventListener('play', () => {
+        // Pause all other audio elements
+        audioElements.forEach(otherAudio => {
+            if (otherAudio !== audio) {
+                otherAudio.pause();
+            }
+        });
+    });
+});
+
+// Get all Video elements for Video Gallery
+var currentlyPlaying;
+
+function onYouTubeIframeAPIReady() {
+    // Initialize video players
+    var videos = document.querySelectorAll('.youtube-video');
+    
+    videos.forEach(function(video) {
+        var videoId = video.getAttribute('data-video-id');
+        new YT.Player(video.id, {
+            height: '450',
+            width: '640',
+            videoId: videoId,
+            events: {
+                'onStateChange': onPlayerStateChange
+            }
+        });
+    });
+
+    // Initialize playlists
+    var playlists = document.querySelectorAll('.youtube-playlist');
+    playlists.forEach(function(playlist) {
+        var playlistId = playlist.getAttribute('data-playlist-id');
+        new YT.Player(playlist.id, {
+            height: '450',
+            width: '1542',
+            playerVars: {
+                list: playlistId
+            },
+            events: {
+                'onStateChange': onPlayerStateChange
+            }
+        });
+    });
+}
+
+function onPlayerStateChange(event) {
+    if (event.data === YT.PlayerState.PLAYING) {
+        if (currentlyPlaying && currentlyPlaying !== event.target) {
+            currentlyPlaying.pauseVideo(); // Pause the currently playing video
+        }
+        currentlyPlaying = event.target; // Update currentlyPlaying to the new video
+    } else if (event.data === YT.PlayerState.ENDED) {
+        currentlyPlaying = null; // Reset when video ends
+    }
+}
