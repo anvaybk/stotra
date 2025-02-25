@@ -33,7 +33,7 @@ nav.menu {
 nav.menu .menu-item {
     background-color: floralwhite;  /* Last it was white */
     border-radius: 10px;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    box-shadow: 0 0 10px #a52a2a; /* 0 0 10px rgba(0, 0, 0, 0.1); */
     margin: 10px;
     text-align: center;
     flex: 1 1 calc(25% - 40px);
@@ -66,7 +66,7 @@ main .content {
 }
 
 footer {
-    background-color: powderblue; /* maroon */
+    background-color: dimgray; /* maroon */
     color: white;  
     padding: 20px 0;
     text-align: center;
@@ -98,8 +98,8 @@ footer {
 /* Responsive Styles */
 @media screen and (max-width: 768px) {
     nav.menu .menu-item {
-        flex: 1 1 calc(50% - 40px);
-        max-width: calc(50% - 40px);
+        flex: 1 1 calc(45% - 40px);  
+        max-width: calc(100% - 40px);
     }
 }
 
@@ -110,10 +110,18 @@ footer {
     }
 }
 
+@media screen and (max-width: 700px) {
+    nav.menu .menu-item {
+       flex: 1 1 calc(45% - 40px);  
+        max-width: calc(100% - 40px);
+    }
+}
+
+
 @media screen and (max-width: 500px) {
     nav.menu .menu-item {
-        flex: 1 1 calc(45% - 40px);
-        max-width: calc(50% - 40px);
+        flex: 1 1 calc(45% - 40px);  
+        max-width: calc(100% - 40px);
     }
 }
 

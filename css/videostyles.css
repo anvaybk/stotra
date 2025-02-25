@@ -1,0 +1,43 @@
+body {
+    font-family: Arial, sans-serif;
+    margin: 20px;
+}
+
+h1 {
+    text-align: center;
+}
+
+.video-container {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.video-item {
+    width: 100%;
+}
+
+h2 {
+    font-size: 1.25em;
+    margin: 10px 0;
+    text-align: center;
+}
+
+.youtube-video, .youtube-playlist {
+    width: 100%;
+    min-height: 450px; /* Set minimum height */
+    height: auto; /* Allow height to expand */
+}
+
+@media (min-width: 368px) {
+    .youtube-video, .youtube-playlist {
+        min-height: 350px; /* Set minimum height */
+        height: 450px; /* Set a specific height for larger screens */
+    }
+
+
+@media (min-width: 768px) {
+    .youtube-video, .youtube-playlist {
+        height: 450px; /* Set a specific height for larger screens */
+    }
+}
