@@ -26,7 +26,7 @@ body {
 .container-heading {
     max-width: auto;
     margin: 1px auto;
-    background-color: dimgray; /* Old maroon */
+    background-color: black; /* dimgray Old maroon */
     padding: 10px;
     border-radius: 8px;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
@@ -97,7 +97,7 @@ h1 {
     text-align: center;
 	width: 100%;
 	font-weight: bold;
-	background-color: dimgray; /* Old maroon */
+	background-color: black; /* dimgray Old maroon */
 	color: white; 
 	
 }
