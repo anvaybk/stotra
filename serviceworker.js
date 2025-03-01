@@ -1,6 +1,6 @@
-// Last updated on 27012025
+// Last updated on 01032025
 
-const CACHE_NAME = 'stotra-v1.0.0.0';
+const CACHE_NAME = 'stotra-v1.0.0.1';
 const INITIAL_CACHED_RESOURCES = [
      "/", // Cache the root URL
         "/index.html", // Cache HTML file
@@ -9,14 +9,24 @@ const INITIAL_CACHED_RESOURCES = [
         "/js/script.js", // Cache JavaScript file
         "/images/Ashtak-Renuka-Mata-Menu.jpg",
         "/images/Dnyeshwar-Maharaj.jpg",
+	"/images/Annapurna-Devi.jpg",
+	"/images/Datta-Bhavsudharasa-Stotra.jpg"
+	"/images/Nitya-Path-Icon-60x60.png"
+	"/images/Shiv-Tandav-Stotra.jpg"
 	"/images/Shree-Sukta-Tuljabhavani-Mata-Menu.jpg",
 	"/images/mahishasurmardini-Mata-Menu.jpg",
-        "/pages/ashtak.html",
-	"/pages/dnyeshwari.html",
-	"/pages/mahishasurmardini.html",
+	"/images/Shree-Lakshmi-Mata-Menu.jpg",
+	"/images/Shree-Mohini-Raj-Newasa.jpg",
+        "/pages/devi-ashtak.html",
+	"/pages/dnyaneshwari.html",
 	"/pages/shreesukta.html",
-	"/pages/about.html",
-	"/pages/contact.html"
+	"/pages/annapurna-stotra.html",
+	"/pages/ghora-kashtodharana.html",	
+	"/pages/lakshmi-stotra.html",	
+	"/pages/mahishasurmardini.html",
+	"/pages/mohiniraj-stotra.html",
+	"/pages/shiv-tandav-stotra.html",
+	"/pages/datta-bhavsudharasa.html"
 ];
 // Cached resources that match the following strings should not be periodically updated.
 // These are the tips html pages themselves, and their images.
