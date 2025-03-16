@@ -1,4 +1,4 @@
-// Last updated on 01032025
+// Last updated on 16032025
 
 const CACHE_NAME = 'stotra-v1.0.0.1';
 const INITIAL_CACHED_RESOURCES = [
@@ -7,26 +7,32 @@ const INITIAL_CACHED_RESOURCES = [
         "/css/styles.css", // Cache CSS file
         "/css/homestyles",
         "/js/script.js", // Cache JavaScript file
-        "/images/Ashtak-Renuka-Mata-Menu.jpg",
-        "/images/Dnyeshwar-Maharaj.jpg",
-	"/images/Annapurna-Devi.jpg",
-	"/images/Datta-Bhavsudharasa-Stotra.jpg"
-	"/images/Nitya-Path-Icon-60x60.png"
-	"/images/Shiv-Tandav-Stotra.jpg"
-	"/images/Shree-Sukta-Tuljabhavani-Mata-Menu.jpg",
-	"/images/mahishasurmardini-Mata-Menu.jpg",
-	"/images/Shree-Lakshmi-Mata-Menu.jpg",
-	"/images/Shree-Mohini-Raj-Newasa.jpg",
-        "/pages/devi-ashtak.html",
-	"/pages/dnyaneshwari.html",
-	"/pages/shreesukta.html",
-	"/pages/annapurna-stotra.html",
-	"/pages/ghora-kashtodharana.html",	
-	"/pages/lakshmi-stotra.html",	
-	"/pages/mahishasurmardini.html",
-	"/pages/mohiniraj-stotra.html",
-	"/pages/shiv-tandav-stotra.html",
-	"/pages/datta-bhavsudharasa.html"
+        "/images/Annapurna-Devi.jpg",
+		"/images/Ashtak-Renuka-Mata-Menu.jpg",
+        "/images/Datta-Bhavsudharasa-Stotra.jpg"
+		"/images/Dnyeshwar-Maharaj.jpg",
+		"/images/Durga-Devi-Menu.jpg",
+		"/images/Ganapati-Atharvashirsha-Menu.jpg",
+		"/images/Ghora-Kashtodharana-Menu.jpg",
+		"/images/mahishasurmardini-Mata-Menu.jpg",
+		"/images/Shiv-Tandav-Stotra.jpg"
+		"/images/Shree-Lakshmi-Mata-Menu.jpg",
+		"/images/Shree-Mohini-Raj-Newasa.jpg",
+		"/images/Shree-Sukta-Tuljabhavani-Mata-Menu.jpg",
+		"/images/android-launchericon-512-512.jpg",
+		"/images/Nitya-Path-Icon-60x60.png"
+		"/pages/annapurna-stotra.html",
+		"/pages/datta-bhavsudharasa.html",
+		"/pages/devi-ashtak.html",
+		"/pages/dnyaneshwari.html",
+		"/pages/durga-stotra.html",	
+		"/pages/ganapati-atharvashirsha.html",	
+		"/pages/ghora-kashtodharana.html",
+		"/pages/lakshmi-stotra.html",
+		"/pages/mahishasurmardini.html",
+		"/pages/shiv-tandav-stotra.html",
+		"/pages/shreesukta.html"
+
 ];
 // Cached resources that match the following strings should not be periodically updated.
 // These are the tips html pages themselves, and their images.
