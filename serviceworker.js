@@ -1,104 +1,98 @@
-// Last updated on 30052025
-
 const CACHE_NAME = 'nityastotra-v1.0.0.0';
-const INITIAL_CACHED_RESOURCES = [
-		"/stotra", // Cache the root URL
-        "/index.html", // Cache HTML file
-        "/css/styles.css", // Cache CSS file
-        "/css/homestyles",
-        "/js/script.js", // Cache JavaScript file
-		"/images/Annapurna-Devi.jpg",
-		"/images/Shree-Lakshmi-Mata-Menu.jpg",
-		"/images/Ashtak-Renuka-Mata-Menu.jpg",
-		"/images/Shree-Mohini-Raj-Newasa.jpg",
-		"/images/Datta-Bhavsudharasa-Stotra.jpg",
-		"/images/Shree-Sukta-Tuljabhavani-Mata-Menu.jpg",
-		"/images/mahishasurmardini-Mata-Menu.jpg",
-		"/images/Dnyeshwar-Maharaj.jpg",
-		"/images/Durga-Devi-Menu.jpg",
-		"/images/Ganapati-Atharvashirsha-Menu.jpg",
-		"/images/Ghora-Kashtodharana-Menu.jpg",
-		"/images/Shiv-Tandav-Stotra.jpg",
-		"/images/favicon-16x16.png",  
-		"/images/favicon-32x32.png",
-		"/images/icon-48x48.png ",
-		"/images/icon-72x72.png",
-		"/images/icon-96x96.png",
-		"/images/icon-128x128.png",
-		"/images/icon-144x144.png", 
-		"/images/icon-152x152.png",
-		"/images/icon-192x192.png",
-		"/images/icon-256x256.png",
-		"/images/icon-384x384.png",
-		"/images/icon-512x512.png",
-		"/images/icon-1024x1024.png",
-		"/images/android-launchericon-512-512.png",
-		"/images/screenshot-400x858.png",
-		"/images/screenshot-540x720.png",
-		"/images/screenshot-720x540.png",
-		"/images/screenshot-1280x720.jpg",
-		"/images/apple-touch-icon.png",
-		"/pages/annapurna-stotra.html",
-		"/pages/datta-bhavsudharasa.html",
-		"/pages/devi-ashtak.html",
-		"/pages/dnyaneshwari.html",
-		"/pages/durga-stotra.html",	
-		"/pages/ganapati-atharvashirsha.html",	
-		"/pages/ghora-kashtodharana.html",
-		"/pages/lakshmi-stotra.html",
-		"/pages/mahishasurmardini.html",
-		"/pages/shiv-tandav-stotra.html",
-		"/pages/mohiniraj-stotra.html",
-		"/pages/privacy-policy.html",
-		"/pages/terms-conditions.html",
-		"/pages/shreesukta.html"
 
+// Dynamically determine the base path of the service worker (e.g., "/stotra")
+const BASE_PATH = self.location.pathname.replace(/\/serviceworker\.js$/, '');
+
+// List of resources relative to the base path
+const RESOURCE_PATHS = [
+    "/", 
+    "/index.html",
+    "/css/styles.css",
+    "/css/homestyles",
+    "/js/script.js",
+    "/images/Annapurna-Devi.jpg",
+    "/images/Shree-Lakshmi-Mata-Menu.jpg",
+    "/images/Ashtak-Renuka-Mata-Menu.jpg",
+    "/images/Shree-Mohini-Raj-Newasa.jpg",
+    "/images/Datta-Bhavsudharasa-Stotra.jpg",
+    "/images/Shree-Sukta-Tuljabhavani-Mata-Menu.jpg",
+    "/images/mahishasurmardini-Mata-Menu.jpg",
+    "/images/Dnyeshwar-Maharaj.jpg",
+    "/images/Durga-Devi-Menu.jpg",
+    "/images/Ganapati-Atharvashirsha-Menu.jpg",
+    "/images/Ghora-Kashtodharana-Menu.jpg",
+    "/images/Shiv-Tandav-Stotra.jpg",
+    "/images/favicon-16x16.png",  
+    "/images/favicon-32x32.png",
+    "/images/icon-48x48.png",
+    "/images/icon-72x72.png",
+    "/images/icon-96x96.png",
+    "/images/icon-128x128.png",
+    "/images/icon-144x144.png",
+    "/images/icon-152x152.png",
+    "/images/icon-192x192.png",
+    "/images/icon-256x256.png",
+    "/images/icon-384x384.png",
+    "/images/icon-512x512.png",
+    "/images/icon-1024x1024.png",
+    "/images/android-launchericon-512-512.png",
+    "/images/screenshot-400x858.png",
+    "/images/screenshot-540x720.png",
+    "/images/screenshot-720x540.png",
+    "/images/screenshot-1280x720.jpg",
+    "/images/apple-touch-icon.png",
+    "/pages/annapurna-stotra.html",
+    "/pages/datta-bhavsudharasa.html",
+    "/pages/devi-ashtak.html",
+    "/pages/dnyaneshwari.html",
+    "/pages/durga-stotra.html",
+    "/pages/ganapati-atharvashirsha.html",
+    "/pages/ghora-kashtodharana.html",
+    "/pages/lakshmi-stotra.html",
+    "/pages/mahishasurmardini.html",
+    "/pages/shiv-tandav-stotra.html",
+    "/pages/mohiniraj-stotra.html",
+    "/pages/privacy-policy.html",
+    "/pages/terms-conditions.html",
+    "/pages/shreesukta.html"
 ];
-// Cached resources that match the following strings should not be periodically updated.
-// These are the tips html pages themselves, and their images.
-// Everything else, we try to update on a regular basis, to make sure lists of tips get updated and css/js are recent too.
+
+// Prepend the base path to each resource
+const INITIAL_CACHED_RESOURCES = RESOURCE_PATHS.map(path => `${BASE_PATH}${path}`);
+
 const DONT_UPDATE_RESOURCES = [
     '/videos/'
-    // '/audios/'
 ];
 
 self.addEventListener('install', event => {
     event.waitUntil((async () => {
-        const cache = await caches.open(CACHE_NAME);
-        await cache.addAll(INITIAL_CACHED_RESOURCES);
+        try {
+            const cache = await caches.open(CACHE_NAME);
+            await cache.addAll(INITIAL_CACHED_RESOURCES);
+            console.log('Resources cached successfully.');
+        } catch (error) {
+            console.error('Failed to cache resources:', error);
+        }
     })());
 });
 
-// We have a cache-first strategy, where we look for resources in the cache first
-// and only on the network if this fails.
-// We also periodically update the cache in the background for the main pages.
 self.addEventListener('fetch', event => {
     event.respondWith((async () => {
         const cache = await caches.open(CACHE_NAME);
-
-        // Try the cache first.
         const cachedResponse = await cache.match(event.request);
-        if (cachedResponse !== undefined) {
-            // Cache hit, let's send the cached resource.
+        if (cachedResponse) {
             return cachedResponse;
         } else {
-            // Nothing in cache, let's go to the network.
-
             try {
                 const fetchResponse = await fetch(event.request);
                 if (!event.request.url.includes('google-analytics') && !event.request.url.includes('browser-sync')) {
-                    // Save the new resource in the cache (responses are streams, so we need to clone in order to use it here).
                     cache.put(event.request, fetchResponse.clone());
                 }
-
-                // And return it.
                 return fetchResponse;
             } catch (e) {
-                // Fetching didn't work let's go to the error page.
                 if (event.request.mode === 'navigate') {
                     await rememberRequestedTip(event.request.url);
-                    const errorResponse = await cache.match('/offline/');
-                    return errorResponse;
+                    return cache.match(`${BASE_PATH}/offline/`);
                 }
             }
         }
@@ -107,36 +101,27 @@ self.addEventListener('fetch', event => {
 
 async function rememberRequestedTip(url) {
     let tips = await localforage.getItem('bg-tips');
-    if (!tips) {
-        tips = [];
-    }
-
+    if (!tips) tips = [];
     tips.push(url);
     await localforage.setItem('bg-tips', tips);
 }
 
-// Listen to background sync events to load requested tips that couldn't be retrieved when offline.
 self.addEventListener('sync', event => {
     if (event.tag === 'bg-load-tip') {
         event.waitUntil(backgroundSyncLoadTips());
     }
 });
 
-// Fetch the requested tips now, and put them in cache.
 async function backgroundSyncLoadTips() {
     const tips = await localforage.getItem('bg-tips');
-    if (!tips || !tips.length) {
-        return;
-    }
+    if (!tips || !tips.length) return;
 
-    // Fetch and cache each tip.
     const cache = await caches.open(CACHE_NAME);
     await cache.addAll(tips);
 
-    // Re-engage user with a notification.
-    registration.showNotification(`${tips.length} DevTools Tips was/were loaded in the background and is/are ready`, {
-        icon: "/images/icon-192x192.png",
-        body: "View the tip",
+    registration.showNotification(`${tips.length} tips loaded in background`, {
+        icon: `${BASE_PATH}/images/icon-192x192.png`,
+        body: "Click to view",
         data: tips[0]
     });
 
@@ -144,12 +129,10 @@ async function backgroundSyncLoadTips() {
 }
 
 self.addEventListener('notificationclick', event => {
-    // assuming only one type of notification right now
     event.notification.close();
     clients.openWindow(event.notification.data);
 });
 
-// Listen the periodic background sync events to update the cached resources.
 self.addEventListener('periodicsync', event => {
     if (event.tag === 'update-cached-content') {
         event.waitUntil(updateCachedContent());
@@ -162,19 +145,14 @@ async function updateCachedContent() {
 
     for (const request of requests) {
         try {
-            // Fetch the new version.
             const fetchResponse = await fetch(request);
-            // Refresh the cache.
             await cache.put(request, fetchResponse.clone());
         } catch (e) {
-            // Fail silently, we'll just keep whatever we already had in the cache.
+            // Silent fail
         }
     }
 }
 
-// Find the entries that are already cached and that we do want to update. This way we only
-// update these ones and let the user visit new pages when they are online to populate more things
-// in the cache.
 async function findCacheEntriesToBeRefreshed() {
     const cache = await caches.open(CACHE_NAME);
     const requests = await cache.keys();
@@ -182,4 +160,3 @@ async function findCacheEntriesToBeRefreshed() {
         return !DONT_UPDATE_RESOURCES.some(pattern => request.url.includes(pattern));
     });
 }
-
