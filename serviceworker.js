@@ -1,8 +1,8 @@
-// Last updated on 16032025
+// Last updated on 30052025
 
-const CACHE_NAME = 'stotra-v1.0.0.1';
+const CACHE_NAME = 'nityastotra-v1.0.0.0';
 const INITIAL_CACHED_RESOURCES = [
-     "/", // Cache the root URL
+		"/", // Cache the root URL
         "/index.html", // Cache HTML file
         "/css/styles.css", // Cache CSS file
         "/css/homestyles",
@@ -115,7 +115,7 @@ async function backgroundSyncLoadTips() {
 
     // Re-engage user with a notification.
     registration.showNotification(`${tips.length} DevTools Tips was/were loaded in the background and is/are ready`, {
-        icon: "/images/android-chrome-192x192.png",
+        icon: "/images/icon-192x192.png",
         body: "View the tip",
         data: tips[0]
     });
@@ -162,3 +162,4 @@ async function findCacheEntriesToBeRefreshed() {
         return !DONT_UPDATE_RESOURCES.some(pattern => request.url.includes(pattern));
     });
 }
+

@@ -1,77 +1,91 @@
 {
   "name": "Nitya Stotra",
   "id": "/stotra/",
-  "short_name": "stotra",
+  "short_name": "नित्य स्तोत्र",
   "start_url": ".",
   "display": "standalone",
-  "background_color": "#a52a2a",
+  "background_color": "#cae9ff",
   "orientation": "any",
   "scope": "/",
-  "description": "नित्य स्तोत्र संग्रह हे एक आध्यात्मिक अॅप आहे, जे दैनंदिन पूजा साठी कालातीत स्तोत्रांचा संग्रह प्रदान करते. देवी अष्टाक्षरी, महिषासुरमर्दिनी स्तोत्र, श्रीसूक्त, लक्ष्मी स्तोत्र, देवी स्तोत्र, अन्नपूर्णा स्तोत्र, घोरकष्टोद्धरण स्तोत्र, दत्तभावसुधारस स्तोत्र, मोहिनीराज स्तोत्र,  श्री ज्ञानेश्वरी पारायण प्रार्थना आणि देवी अष्टकं यासारख्या स्तोत्रांसह, हे अॅप भक्तांना एक समृद्ध आध्यात्मिक अनुभव प्रदान करते. जे लोक दिव्य पूजा त्यांच्या दैनंदिन जीवनात समाविष्ट करण्याचा प्रयत्न करत आहेत, त्यांच्यासाठी हे अॅप एक उत्तम मार्गदर्शक आहे.",
+  "description": "नित्य स्तोत्र संग्रह हे एक आध्यात्मिक अॅप आहे, जे दैनंदिन पूजा साठी कालातीत स्तोत्रांचा संग्रह प्रदान करते. देवी अष्टाक्षरी, महिषासुरमर्दिनी स्तोत्र, श्रीसूक्त, लक्ष्मी स्तोत्र, देवी स्तोत्र, अन्नपूर्णा स्तोत्र, घोरकष्टोद्धरण स्तोत्र, दत्तभावसुधारस स्तोत्र, मोहिनीराज स्तोत्र,  श्री ज्ञानेश्वरी पारायण प्रार्थना आणि देवी अष्टकं यासारख्या स्तोत्रांसह, हे अॅप भक्तांना एक समृद्ध आध्यात्मिक अनुभव प्रदान करते. जे लोक दिव्य पूजा त्यांच्या दैनंदिन जीवनात समाविष्ट करण्याचा प्रयत्न करत आहेत, त्यांच्यासाठी हे अॅप एक उत्तम मार्गदर्शक आहे. ",
   "version": "1.0.0.0",
-  "theme_color": "#000000",
-  "developer": {
+  "theme_color": "#274c77",
+   "developer": {
     "name": "Anvay B Kulkarni",
     "url": "https://anvaybk.github.io/stotra/"
   },
   "icons": [
     {
+      "src": "images/favicon-16x16.png",
+      "type": "image/png",
+      "sizes": "16x16"
+    },
+    {
+      "src": "images/favicon-32x32.png",
+      "type": "image/png",
+      "sizes": "32x32"
+    },
+    {
       "src": "images/icon-48x48.png",
-      "sizes": "48x48",
-      "type": "image/png"
+      "type": "image/png",
+      "sizes": "48x48"
     },
     {
       "src": "images/icon-72x72.png",
-      "sizes": "72x72",
-      "type": "image/png"
+      "type": "image/png",
+      "sizes": "72x72"
     },
     {
       "src": "images/icon-96x96.png",
-      "sizes": "96x96",
-      "type": "image/png"
+      "type": "image/png",
+      "sizes": "96x96"
     },
     {
       "src": "images/icon-128x128.png",
-      "sizes": "128x128",
-      "type": "image/png"
+      "type": "image/png",
+      "sizes": "128x128"
     },
     {
       "src": "images/icon-144x144.png",
-      "sizes": "144x144",
-      "type": "image/png"
+      "type": "image/png",
+      "sizes": "144x144"
     },
     {
       "src": "images/icon-152x152.png",
-      "sizes": "152x152",
-      "type": "image/png"
+      "type": "image/png",
+      "sizes": "152x152"
     },
     {
       "src": "images/icon-192x192.png",
-      "sizes": "192x192",
-	  "purpose": "maskable",
-      "type": "image/png"
+      "type": "image/png",
+      "purpose": "maskable",
+      "sizes": "192x192"
     },
     {
       "src": "images/icon-256x256.png",
-      "sizes": "256x256",
-      "type": "image/png"
+      "type": "image/png",
+      "sizes": "256x256"
     },
     {
       "src": "images/icon-384x384.png",
-      "sizes": "384x384",
-	  "purpose": "any",
-      "type": "image/png"
+      "type": "image/png",
+      "sizes": "384x384"
     },
     {
       "src": "images/icon-512x512.png",
-      "sizes": "512x512",
-      "type": "image/png"
+      "type": "image/png",
+      "sizes": "512x512"
+    },
+    {
+      "src": "images/icon-1024x1024.png",
+      "type": "image/png",
+      "purpose": "any",
+      "sizes": "1024x1024"
     }
-	
   ],
   "screenshots": [
     {
-      "src": "images/screenshot-1280x720.jpg",
+      "src": "images/screenshot-1280x720.png",
       "type": "image/png",
       "sizes": "1280x720",
       "platform": "wide"
@@ -99,7 +113,7 @@
   "related_applications": [
     {
       "platform": "windows",
-      "url": "https://anvaybk.github.io/stotra/",
+      "url": "https://anvaybk.github.io/stotra",
       "id": "stotra"
     },
     {
@@ -145,7 +159,17 @@
       "origin": "*.googletagmanager.com"
     }
   ],
-  "iarc_rating_id": "e58c174a-81d2-5c3c-32cc-34b8de4a52e9",
+  "shortcuts": [
+    {
+      "name": "Lakshmi Stotra",
+      "url": "https://anvaybk.github.io/stotra/pages/lakshmi-stotra.html",
+        "src": "images/icon-96x96.png",
+        "type": "image/png",
+        "sizes": "96x96",
+        "description": "Lakshmi Stotra Vachan"
+     }
+  ],
+  "iarc_rating_id": "5ee1bc30-7372-472a-8884-87699b63d6cb",
   "share_target": {
     "action": "/handle-shared-content/",
     "method": "POST",
