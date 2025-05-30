@@ -10,6 +10,7 @@ const RESOURCE_PATHS = [
     "/css/styles.css",
     "/css/homestyles",
     "/js/script.js",
+	"/favicon.ico",
     "/images/Annapurna-Devi.jpg",
     "/images/Shree-Lakshmi-Mata-Menu.jpg",
     "/images/Ashtak-Renuka-Mata-Menu.jpg",
@@ -22,7 +23,7 @@ const RESOURCE_PATHS = [
     "/images/Ganapati-Atharvashirsha-Menu.jpg",
     "/images/Ghora-Kashtodharana-Menu.jpg",
     "/images/Shiv-Tandav-Stotra.jpg",
-    "/images/favicon-16x16.png",  
+	"/images/favicon-16x16.png",  
     "/images/favicon-32x32.png",
     "/images/icon-48x48.png",
     "/images/icon-72x72.png",
@@ -54,7 +55,8 @@ const RESOURCE_PATHS = [
     "/pages/mohiniraj-stotra.html",
     "/pages/privacy-policy.html",
     "/pages/terms-conditions.html",
-    "/pages/shreesukta.html"
+    "/pages/shreesukta.html",
+	"/pages/offline.html"
 ];
 
 // Prepend the base path to each resource
@@ -92,7 +94,7 @@ self.addEventListener('fetch', event => {
             } catch (e) {
                 if (event.request.mode === 'navigate') {
                     await rememberRequestedTip(event.request.url);
-                    return cache.match(`${BASE_PATH}/offline/`);
+                    return cache.match(`${BASE_PATH}/offline.html`);
                 }
             }
         }
