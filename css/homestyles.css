@@ -2,7 +2,7 @@ body {
     font-family: Arial, sans-serif;
     margin: 0;
     padding: 0;
-    background-color: powderblue;
+    background-color: #cae9ff; /* Last: powderblue;*/
 }
 
 header {
@@ -27,13 +27,13 @@ nav.menu {
     flex-wrap: wrap;
     justify-content: space-around;
     padding: 20px;
-    background-color: powderblue; /* #f4f4f4; */
+    background-color: #cae9ff; /* #f4f4f4; Last: powderblue*/
 }
 
 nav.menu .menu-item {
-    background-color: floralwhite;  /* Last it was white */
+    background-color: aliceblue;  /* Last it was white: floralwhite */
     border-radius: 10px;
-    box-shadow: 0 0 10px #a52a2a; /* 0 0 10px rgba(0, 0, 0, 0.1); */
+    box-shadow: 0 0 10px #274c77; /* 0 0 10px rgba(0, 0, 0, 0.1); Last:#a52a2a*/
     margin: 10px;
     text-align: center;
     flex: 1 1 calc(25% - 40px);
@@ -66,7 +66,7 @@ main .content {
 }
 
 footer {
-    background-color: black; /* dimgray maroon */
+    background-color: #274c77; /* dimgray maroon, Last:black */
     color: white;  
     padding: 20px 0;
     text-align: center;
