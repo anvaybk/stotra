@@ -65,7 +65,7 @@ const DONT_UPDATE_RESOURCES = [
 self.addEventListener('install', event => {
     event.waitUntil((async () => {
         const cache = await caches.open(CACHE_NAME);
-        cache.addAll(INITIAL_CACHED_RESOURCES);
+        await cache.addAll(INITIAL_CACHED_RESOURCES);
     })());
 });
 
