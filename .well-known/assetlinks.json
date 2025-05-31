@@ -1,0 +1,11 @@
+[
+  {
+    "relation": ["delegate_permission/common.handle_all_urls"],
+    "target": {
+      "namespace": "android_app",
+      "package_name": "io.github.anvaybk.stotra.twa",
+      "sha256_cert_fingerprints":
+        ["59:BC:4A:2F:28:5C:D2:A7:F2:ED:64:63:29:93:12:9D:F2:B6:A1:8E:E0:B1:CA:CD:02:E4:3F:25:81:7D:3F:82"]
+    }
+  }
+]
