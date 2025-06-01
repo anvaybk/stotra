@@ -39,6 +39,44 @@ function goToNityaPathHome() {
      window.location.href = '../nityapathhome.html';
 }
 
+// Chapter Next Previous link for All Nitya Stotra 31052025
+function goToAnnapurnaHome() {
+     window.location.href = 'annapurna-stotra.html';
+}
+function goToAtharvashirshaHome() {
+     window.location.href = 'ganapati-atharvashirsha.html';
+}
+function goToDeviAshtakHome() {
+     window.location.href = 'devi-ashtak.html';
+}
+function goToLakshmiStotraHome() {
+     window.location.href = 'lakshmi-stotra.html   ';
+}
+function goToShreesuktaHome() {
+     window.location.href = 'shreesukta.html';
+}
+function goToMahishasurmardiniHome() {
+     window.location.href = 'mahishasurmardini.html ';
+}
+function goToDnyaneshwariHome() {
+     window.location.href = 'dnyaneshwari.html';
+}
+function goToDurgaStotraHome() {
+     window.location.href = 'durga-stotra.html';
+}
+function goToMohinirajStotraHome() {
+     window.location.href = 'mohiniraj-stotra.html';
+}
+function goToShivTandavStotraHome() {
+     window.location.href = 'shiv-tandav-stotra.html';
+}
+function goToGhoraKashtodharanaHome() {
+     window.location.href = 'ghora-kashtodharana.html  ';
+}
+function goToDattaBhavsudharasaHome() {
+     window.location.href = 'datta-bhavsudharasa.html';
+}
+
 // JavaScript to disable right-click context menu globally and on a specific section
 document.addEventListener('DOMContentLoaded', function() {
     // Disable right-click context menu globally

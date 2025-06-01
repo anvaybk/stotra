@@ -91,7 +91,7 @@ h1 {
 .chapter-content {
     max-width: 100%;
     overflow-y: auto;
-	max-height: 1050px; 
+	max-height: -webkit-fill-available;   /* Old Value 1050px */
     /* max-height: fit-content;	*/		/* 600px;  Adjust as needed  work on this point*/ 
 	background-color: #cae9ff; /* Last:powderblue */
 	font-size: 24px;
@@ -240,4 +240,31 @@ div {
     height:100%;
     width:100%;
     border:5px solid black;
+}
+
+/* Next Previous Buttons */
+
+ .btn-group button {
+  background-color: #274c77; 
+  border: 1px solid #274c77; /* bisque border */
+  color: white; /* White text */
+  padding: 10px 24px; /* Some padding */
+  cursor: pointer; /* Pointer/hand icon */
+  float: left; /* Float the buttons side by side */
+}
+
+.btn-group button:not(:last-child) {
+  border-right: none; /* Prevent double borders */
+}
+
+/* Clear floats (clearfix hack) */
+.btn-group:after {
+  content: "";
+  clear: both;
+  display: table;
+}
+
+/* Add a background color on hover */
+.btn-group button:hover {
+  background-color: deepskyblue;
 }
