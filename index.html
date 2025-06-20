@@ -80,12 +80,12 @@ window.dataLayer = window.dataLayer || [];
 
     .menu-grid {
       display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+      grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
       gap: 1.5rem;
       max-width: 1000px;
       margin: auto;
     }
-
+	
     .menu-item {
       display: flex;
       flex-direction: column;
@@ -146,6 +146,24 @@ window.dataLayer = window.dataLayer || [];
         font-size: 1.5rem;
       }
     }
+	
+  /* Added for Small Screen Size */ 
+ @media (max-width: 400px) {
+  .menu-grid {
+    grid-template-columns: repeat(2, 1fr); /* Force 2 columns */
+    gap: 1rem;
+  }
+
+  .menu-item img {
+    width: 60px;
+    height: 60px;
+  }
+
+  .menu-item span {
+    font-size: 0.85rem;
+  }
+}
+
   </style>
 </head>
 <script>
