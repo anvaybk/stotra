@@ -25,8 +25,9 @@ header .header-content h2 {
 nav.menu {
     display: flex;
     flex-wrap: wrap;
-    justify-content: space-around;
+    justify-content: space-between; /*space-around; */
     padding: 20px;
+	flex-direction: row;
     background-color: #cae9ff; /* #f4f4f4; Last: powderblue*/
 }
 
@@ -45,8 +46,8 @@ nav.menu .menu-item {
 }
 
 nav.menu .menu-item img {
-    width: 60px;
-    height: 60px;
+    width: 100px;  /* Last 60px */
+    height: 100px; /* Last 60px */
 }
 
 nav.menu .menu-item span {
