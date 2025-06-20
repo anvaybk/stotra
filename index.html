@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="mr">
 <head>
 <!-- Google tag (gtag.js) -->
 <script async src="https://www.googletagmanager.com/gtag/js?id=G-MKM8WSFTND"></script>
@@ -44,7 +44,109 @@ window.dataLayer = window.dataLayer || [];
     <link rel="icon" type="image/png" sizes="16x16" href="images/favicon-16x16.png">	
     <link rel="icon" type="image/x-icon" href="favicon.ico">
 	<title> नित्य स्तोत्र संग्रह - Nitya Stotra Sangrah Home </title>	
-    
+
+  <!-- Styles -->
+  <style>
+    body {
+      margin: 0;
+      font-family: 'Segoe UI', sans-serif;
+      background-color: #cae9ff;     <!-- #fff8f0 -->
+      color: #333;
+    }
+
+    header {
+      text-align: center;
+	  background: #274c77;
+      <!-- background: linear-gradient(to right, #fff0c2, #ffdd99); -->
+      padding: 2rem 1rem;
+    }
+
+    header h1 {
+      color: white; /* #884400; #274c77  */
+      font-size: 2rem;
+	  <!-- background:	linear-gradient(to right, #fff0c2, #ffdd99) -->
+    }
+
+    header img {
+      max-width: 40%;
+      height: 20%;
+      border-radius: 10px;
+      margin-top: 1rem;
+    }
+
+    .icon-menu {
+      padding: 2rem 1rem;
+    }
+
+    .menu-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+      gap: 1.5rem;
+      max-width: 1000px;
+      margin: auto;
+    }
+
+    .menu-item {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      text-decoration: none;
+      background: white; /* #fff; floralwhite */
+      border-radius: 10px;
+      padding: 1rem;
+      box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+      transition: transform 0.2s;
+    }
+
+    .menu-item:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
+    }
+
+    .menu-item img {
+      width: 80px;
+      height: 80px;
+	  margin-bottom: 1rem;
+      <!-- object-fit: cover; -->
+      <!-- margin-bottom: 0.5rem; -->
+    }
+
+    .menu-item span {
+      color: #512b07;
+      font-size: 0.95rem;
+      font-weight: 600;
+      text-align: center;
+	  
+    }
+
+    footer {
+      background: #274c77; /* #333; #6b3e26;*/
+      color: #fff;
+      text-align: center;
+      padding: 2rem 1rem;
+      font-size: 0.9rem;
+    }
+
+    .social-icons {
+      list-style: none;
+      padding: 0;
+      display: flex;
+      justify-content: center;
+      gap: 1rem;
+      margin-bottom: 1rem;
+    }
+
+    .social-icons li img {
+      width: 40px;
+      height: 40px;
+    }
+
+    @media (max-width: 480px) {
+      header h1 {
+        font-size: 1.5rem;
+      }
+    }
+  </style>
 </head>
 <script>
    // Additional code for service worker
@@ -52,17 +154,23 @@ window.dataLayer = window.dataLayer || [];
          navigator.serviceWorker.register('serviceworker.js')
          }
   </script>	
-<body>
+
+<body oncontextmenu="return false;">
 	<div class="container-heading" oncontextmenu="return false;">
-        <h1> 🕉️ नित्य स्तोत्र संग्रह 📚 </h1> 
-        <div class="chapter-content" oncontextmenu="return false;"> 
-		<!-- <marquee> <a href="https://anvaybk.github.io/stotra/pages/kathamrutnondani.html">  नोंदणी करण्यासाठी इछुक भक्तांनी येथे माहिती भरावी </a> -->
- 		<!-- contents -->
-		<!-- </marquee> -->
-		<nav class="menu">
-			<a href="https://anvaybk.github.io/stotra/pages/ganapati-atharvashirsha.html" class="menu-item">  
+	<div class="chapter-content" oncontextmenu="return false;"> 
+  <header>
+    <h1>🙏 नित्य स्तोत्र संग्रह 🙏 </h1> 
+	<!-- <h1>🕉️ नित्य स्तोत्र संग्रह 📚 </h1>  -->
+   <!-- <img src="images/Shree-Sukta-Tuljabhavani-Mata-Menu.jpg" alt="Shri Tuljabhavani" width="80%;" height="30%">  -->
+  </header>
+
+  <section class="icon-menu">
+    <div class="menu-grid">
+      
+	  <!-- <nav class="menu"> -->
+				<a href="https://anvaybk.github.io/stotra/pages/ganapati-atharvashirsha.html" class="menu-item"> 
 				<img src="images/Ganapati-Atharvashirsha-Menu.jpg" alt="Ganapati Atharvashirsha Stotra"> 
-				<span>  श्री गणपती अथर्वशीर्ष </span>
+				<span> श्री गणपती अथर्वशीर्ष </span>
 			</a> 
 			
 			<a href="https://anvaybk.github.io/stotra/pages/hanumanchalisa.html" class="menu-item">  
@@ -71,7 +179,7 @@ window.dataLayer = window.dataLayer || [];
 			</a>
 			
 			<a href="https://anvaybk.github.io/stotra/pages/ramraksha.html" class="menu-item">  
-				<img src="images/Ramraksha-Ramdev.jpg" alt="Ramraksha Stotra"> 
+				<img src="images/Ramraksha-Ramdev.jpg" alt="Ramraksha Stotra">
 				<span>  श्री रामरक्षा स्तोत्र </span>
 			</a> 
 			
@@ -91,7 +199,7 @@ window.dataLayer = window.dataLayer || [];
 			</a>
 			
 			<a href="https://anvaybk.github.io/stotra/pages/shreesukta.html" class="menu-item">  
-				<img src="images/Shree-Sukta-Tuljabhavani-Mata-Menu.jpg" alt="Tuljabhavani Mata"> 
+				<img src="images/Shree-Sukta-Tuljabhavani-Mata-Menu.jpg" alt="Tuljabhavani Mata">  
 				<span> श्रीसूक्त </span>
 			</a>
 
@@ -131,98 +239,44 @@ window.dataLayer = window.dataLayer || [];
 				<span> दत्तभाव सुधारस स्तोत्र </span>
 			</a> 
 
-			
-	<!--		<a href="https://anvaybk.github.io/stotra/pages/saptahikparayan.html" class="menu-item">
-				<img src="images/Registration-Icon-40x40.png" alt="Saptahik Parayan Registration">
-				<span>साप्ताहिक पारायण नोंदणी</span>
-			</a>
-			<a href="https://anvaybk.github.io/stotra/pages/sangeetsevaparayan.html" class="menu-item">
-				<img src="images/Registration-Icon-40x40.png" alt="Sevanand Sangget Sabha Registration">
-				<span>सेवानंद संगीत सभा नोंदणी</span>
-			</a>
-			<a href="https://anvaybk.github.io/stotra/pages/visheshsevaparayan.html" class="menu-item">
-				<img src="images/Registration-Icon-40x40.png" alt="Vishesh Seva Registration">
-				<span>विशेष सेवा नोंदणी</span>
-			</a>
-			<a href="https://anvaybk.github.io/stotra/pages/granthvachanseva.html" class="menu-item">
-				<img src="images/Registration-Icon-40x40.png" alt="Granth Vachan Registration">
-				<span>ग्रंथ वाचन नोंदणी </span>   
-			</a> 
-			
-			<a href="https://anvaybk.github.io/stotra/pages/kavyarupistotra.html" class="menu-item">
-				<img src="images/Video-Gallery-Icon-40x40.png" alt="Kavyarupi stotra Gallery">
-				<span> काव्यरुपी संक्षिप्त श्रीगुरुचरित्र </span>
-		        </a> 
-				
-			<a href="https://anvaybk.github.io/stotra/pages/videogallery.html" class="menu-item">
-				<img src="images/Video-Gallery-Icon-40x40.png" alt="Video Gallery">
-				<span>व्हिडिओ गॅलरी</span>
-			</a>
-			<a href="https://anvaybk.github.io/stotra/pages/audiogallery.html" class="menu-item">
-				<img src="images/Audio-Gallery-Icon-40x40.png" alt="Audio Gallery">
-				<span>ऑडिओ गॅलरी</span>
-			</a>
-			<a href="https://anvaybk.github.io/stotra/pages/photogallery.html" class="menu-item">
-				<img src="images/Photo-Gallery-Icon-40x40.png" alt="Photo Gallery">
-				<span>फोटो गॅलरी</span>
-			</a>
-			<a href="https://anvaybk.github.io/stotra/pages/socialmedia.html" class="menu-item">
-				<img src="images/Social-Media-Icon-40x40.png" alt="About Us and Social Media">
-				<span>सोशल मिडिया</span>
-			</a>
-			<a href="https://anvaybk.github.io/stotra/pages/annualevents.html" class="menu-item">
-				<img src="images/AnnualEvent-Icon-40x40.png" alt="Annual Events">
-				<span>वार्षिक उत्सव</span>
-			</a>
-			
-			<a href="https://play.google.com/store/apps/details?id=io.github.anvaybk.stotra.twa&pcampaignid=website_app_share" class="menu-item">
-				<img src="images/Google_play_store.svg" alt="Install Android App">
-				<span>  अँड्रॉइड ॲप्लिकेशन</span>
-			</a>
-			
-			<a href="https://anvaybk.github.io/stotra/pages/donations.html" class="menu-item">
-				<img src="images/Donations-Icon-40x40.png" alt="Donations">
-				<span>देणगी </span>
-			</a>
-			<a href="https://anvaybk.github.io/stotra/pages/contactus.html" class="menu-item">
-				<img src="images/ContactUs-Icon-40x40.png" alt="Contact Us">
-				<span>संपर्क </span>
-			</a> -->
-		</nav>
-		 <p> </p> <br> <!-- <p> </p>  <br> <p> </p>  -->
-	
-	<footer>
-       <!-- <div class="footer-content"> -->
-	<div> <ul class="social-icons">
-	 <li><a href="https://play.google.com/store/apps/details?id=io.github.anvaybk.stotra.twa&pcampaignid=website_app_share" target="_blank"> 
+		<!-- </nav> -->
+	  
+    </div>
+  </section>
+
+  <footer>
+    <ul class="social-icons">
+      <!-- <li><a href="https://www.facebook.com/Shri.Sant.Pachlegaonkar.Maharaj" target="_blank"><img src="images/Facebook-Icon-40x40.png" alt="Facebook"></a></li> -->
+      
+	  <!-- <li><a href="https://www.instagram.com/shripachlegaonkarmaharaj/" target="_blank"><img src="images/Instagram-Icon-40x40.png" alt="Instagram"></a></li> -->
+	  
+      <!-- <li><a href="https://maps.app.goo.gl/DyTkYFTJfKjvAue5A" target="_blank"><img src="images/Google-maps-Icon-40x40.png" alt="Google Maps"></a></li> -->
+      
+	 <li> <a href="https://play.google.com/store/apps/details?id=io.github.anvaybk.stotra.twa&pcampaignid=website_app_share" target="_blank"> 
 	 <img src="images/Google_play_store.svg" alt="Nitya Stotra Android App"></a></li>
-        
-	<!-- <li><a href="https://www.facebook.com/ShriKshetraDattadham/" target="_blank">
-			<img src="images/Facebook-Icon-40x40.png" alt="Facebook"></a></li>
-        <li><a href="https://www.instagram.com/shrikshetradattadhamparbhani/" target="_blank">
-			<img src="images/Instagram-Icon-40x40.png" alt="Instagram"></a></li>
-        <li><a href="https://maps.app.goo.gl/iZpJUkdoWsJVRzSP6" target="_blank">
-			<img src="images/Google-maps-Icon-40x40.png" alt="Google Map"></a></li> -->
-		<!-- <li><a href="https://www.whatsapp.com/channel/0029Va5jbowDJ6HAmko3142r" target="_blank"> -->
-			<!-- <img src="images/Whatsapp-Icon-40x40.png" alt="WhatsApp"></a></li> -->
-        <li>  <a href="https://wa.me/919850001524?text=Hello,%20I%20am%20contacting%20you%20from%20the%20Nitya%20Stotra%20app.%20I%20need%20assistance,%20please%20help!" 
+	  
+	 <li>  <a href="https://wa.me/919850001524?text=Hello,%20I%20am%20contacting%20you%20from%20the%20Nitya%20Stotra%20app.%20I%20need%20assistance,%20please%20help!" 
 			target="_blank" 
 		   style="text-decoration: none; color: #25D366; font-weight: bold;">
 		   <img src="images/Whatsapp-Icon-40x40.png" 
 			alt="WhatsApp" width="23px" height="23px" alt="Chat with us on WhatsApp" style="vertical-align: middle;"> 
-			</a> </li>  		
-		  <li><a href="http://www.youtube.com/@EasyToDoItAll" target="_blank">
-			<img src="images/YTube-Icon-40x40.png" alt="YouTube"></a></li> 	
-	</ul>
-	
-            <p>&copy; 2025 - All rights reserved.<br> Version 1.0.0.0 </p> 
-			  <!-- <p>&copy; 2025 - All rights reserved.<br>  @ Anvay Kulkarni <br> Version 1.0.0.0 </p> <p> </p> -->
-        </div>
-    </footer>
-	
-	</div>
+			</a> </li> 
+      
+	  <li><a href="http://www.youtube.com/@EasyToDoItAll" target="_blank">
+			<img src="images/YTube-Icon-40x40.png" alt="YouTube"></a></li> 
+    </ul>
+    
+	<!-- <p> <a href="https://wa.me/919850001524?text=Hello,%20I%20am%20contacting%20you%20from%20the%20Nitya%20Stotra%20app.%20I%20need%20assistance,%20please%20help!" 
+			target="_blank" 
+		   style="text-decoration: none; color: #25D366; font-weight: bold;">
+		   <img src="images/Whatsapp-Icon-40x40.png" 
+			alt="WhatsApp" width="23px" height="23px" alt="Chat with us on WhatsApp" style="vertical-align: middle;"> 
+			</a> 
+			</p> -->
+	<p>&copy; 2025 Nitya Stotra - All rights reserved.<br><br>Version 1.0.0.1</p>		
+  </footer>
+  </div>
 	    </div>
-    </div> 
-    <script src="js/script.js"></script>
+		<script src="js/script.js"></script>
 </body>
 </html>
