@@ -36,8 +36,8 @@ window.dataLayer = window.dataLayer || [];
 	<!-- Canonical URL -->
 	<link rel="canonical" href="https://anvaybk.github.io/stotra/index.html"/>
 	  
-    <link rel="stylesheet" href="css/styles.css">
-    <link rel="stylesheet" href="css/homestyles.css">
+    <!-- <link rel="stylesheet" href="css/styles.css"> -->
+    <!-- <link rel="stylesheet" href="css/homestyles.css"> -->
     <link rel="manifest" href="manifest.json">
     <link rel="apple-touch-icon" sizes="180x180" href="images/apple-touch-icon.png">
     <link rel="icon" type="image/png" sizes="32x32" href="images/favicon-32x32.png">
@@ -139,14 +139,15 @@ window.dataLayer = window.dataLayer || [];
   }
 
   .menu-item img {
-    width: 70px;
-    height: 70px;
+    width: 80px;
+    height: 80px;
     margin-bottom: 1rem;
+	object-fit: cover;
   }
 
   .menu-item span {
     color: #512b07;
-    font-size: 0.9rem;
+    font-size: 0.95rem;
     font-weight: 600;
     text-align: center;
   }
@@ -178,6 +179,23 @@ window.dataLayer = window.dataLayer || [];
       font-size: 1.5rem;
     }
   }
+  
+  
+ @media (max-width: 320px) {
+    .menu-grid {
+      grid-template-columns: repeat(2, 1fr); /* ensure at least 2 on smallest phones */
+   }
+ }
+ 
+ @media (max-width: 300px) {
+  .menu-item img {
+    width: 60px;
+    height: 60px;
+  }
+  .menu-item span {
+    font-size: 0.85rem;
+  }
+}
 </style>
   
 </head>
