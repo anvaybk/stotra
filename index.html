@@ -156,6 +156,20 @@ window.dataLayer = window.dataLayer || [];
   }
 }
 	
+/* Small Mobile and up: 2 columns */
+@media (min-width: 350px) {
+  .menu-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}	
+
+/* Small Mobile and up: 3 columns */
+@media (min-width: 450px) {
+  .menu-grid {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+
 	
   /* Tablet and up: 3 columns */
 @media (min-width: 600px) {
@@ -172,7 +186,7 @@ window.dataLayer = window.dataLayer || [];
 }
 
 /* Desktop and large screens: 5 columns */
-@media (min-width: 1200px) {
+@media (min-width: 1100px) {
   .menu-grid {
     grid-template-columns: repeat(5, 1fr);
   }
@@ -181,8 +195,8 @@ window.dataLayer = window.dataLayer || [];
 
 /* Base styles — mobile-first */
 .menu-item img {
-  width: 80px;
-  height: 80px;
+  width: 70px;
+  height: 70px;
 }
 
 .menu-item span {
@@ -243,7 +257,7 @@ window.dataLayer = window.dataLayer || [];
 	<div class="container-heading" oncontextmenu="return false;">
 	<div class="chapter-content" oncontextmenu="return false;"> 
   <header>
-    <h1>🙏 नित्य स्तोत्र संग्रह 🙏 </h1> 
+    <h1> 📚 नित्य स्तोत्र संग्रह  </h1> 
 	<!-- <h1>🕉️ नित्य स्तोत्र संग्रह 📚 </h1>  -->
    <!-- <img src="images/Shree-Sukta-Tuljabhavani-Mata-Menu.jpg" alt="Shri Tuljabhavani" width="80%;" height="30%">  -->
   </header>
@@ -296,6 +310,11 @@ window.dataLayer = window.dataLayer || [];
 				<img src="images/Durga-Devi-Menu.jpg" alt="Durga Devi Stotra"> 
 				<span>  दुर्गा स्तोत्र </span>
 			</a> 
+		
+			<a href="https://anvaybk.github.io/stotra/pages/mohiniraj-stotra.html" class="menu-item"> 
+				<img src="images/Shree-Mohini-Raj-Newasa.jpg" alt="MohiniRaj Newasa"> 
+				<span>  मोहिनीराज स्तोत्र </span>
+			</a>
 
 			<a href="https://anvaybk.github.io/stotra/pages/mahishasurmardini.html" class="menu-item">  
 				<img src="images/mahishasurmardini-Mata-Menu.jpg" alt="Mahishasurmardini Mata"> 
@@ -307,12 +326,7 @@ window.dataLayer = window.dataLayer || [];
 				<span> ज्ञानेश्वरी पारायण प्रार्थना</span>
 			
 			</a>
-			
-			<a href="https://anvaybk.github.io/stotra/pages/mohiniraj-stotra.html" class="menu-item"> 
-				<img src="images/Shree-Mohini-Raj-Newasa.jpg" alt="MohiniRaj Newasa"> 
-				<span>  मोहिनीराज स्तोत्र </span>
-			</a>
-			
+						
 			<a href="https://anvaybk.github.io/stotra/pages/ghora-kashtodharana.html" class="menu-item">  
 				<img src="images/Ghora-Kashtodharana-Menu.jpg" alt="Ghora Kashtodharana Stotram"> 
 				<span> घोर कष्टोद्धरण स्तोत्र</span>
