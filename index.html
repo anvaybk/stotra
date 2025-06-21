@@ -92,6 +92,14 @@ window.dataLayer = window.dataLayer || [];
   }
 }
 
+ /* ≥300px: 3 columns */
+  @media (min-width: 300px) {
+    .menu-grid {
+      grid-template-columns: repeat(2, 1fr);
+    }
+  }
+
+
   /* ≥450px: 3 columns */
   @media (min-width: 450px) {
     .menu-grid {
@@ -184,7 +192,7 @@ window.dataLayer = window.dataLayer || [];
 	<div class="container-heading" oncontextmenu="return false;">
 	<div class="chapter-content" oncontextmenu="return false;"> 
   <header>
-    <h1> 📚 नित्य स्तोत्र संग्रह  </h1> 
+    <h1> 📚 नित्य स्तोत्र संग्रह 📚 </h1> 
 	<!-- <h1>🕉️ नित्य स्तोत्र संग्रह 📚 </h1>  -->
    <!-- <img src="images/Shree-Sukta-Tuljabhavani-Mata-Menu.jpg" alt="Shri Tuljabhavani" width="80%;" height="30%">  -->
   </header>
