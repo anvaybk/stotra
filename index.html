@@ -78,11 +78,19 @@ window.dataLayer = window.dataLayer || [];
 
   .menu-grid {
     display: grid;
-    grid-template-columns: repeat(2, 1fr); /* Base: always 2 columns on mobile */
+	grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+    /* grid-template-columns: repeat(2, 1fr);*/ /* Base: always 2 columns on mobile */
     gap: 1.5rem;
     max-width: 1000px;
     margin: auto;
   }
+  
+  /* Fallback for very narrow screens (optional, but safer)*/
+  @media (max-width: 320px) {
+  .menu-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
 
   /* ≥450px: 3 columns */
   @media (min-width: 450px) {
