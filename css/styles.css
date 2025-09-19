@@ -6,16 +6,21 @@ body {
     line-height: 1.6;
     margin: 0;
     padding: 0;
-    background-color: #cae9ff;  /* powderblue / #f0f0f0 */
+    background-color: #274c77;
     user-select: none;
     -webkit-user-select: none;
+	min-height: 100vh;
+	padding-top: env(safe-area-inset-top);
+	padding-bottom: env(safe-area-inset-bottom);
+	padding-left: env(safe-area-inset-left);
+	padding-right: env(safe-area-inset-right);
    
 }
 
 .container {
-    max-width: 600px;
+    max-width: 600px; /* LW 600px; */
     margin: 20px auto;
-	background-color: #cae9ff ; /* Old maroon / powderblue*/
+	background-color: #274c77; /* Old maroon, brown */
 	/* background-color: #fff; */
     padding: 20px;
     border-radius: 8px;
@@ -26,13 +31,15 @@ body {
 .container-heading {
     max-width: auto;
     margin: 1px auto;
-    background-color: #274c77; /* dimgray Old maroon, Last:black */
+    background-color: #274c77; /* Old brown maroon #76552b */
     padding: 10px;
     border-radius: 8px;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
 	/* height: auto; */
 	/* max-height: fit-content; */
-	max-height: fit-content; 
+	/* max-height: fit-content; */
+	/* color: white; */
+	text-align: center;	
 	
 	
 }
@@ -52,7 +59,7 @@ center {
 
 button {
 	display: block; 
-	background-color: #274c77; /* dimgray, deepskyblue */
+	background-color: #274c77; /* Old brown #76552b */
 	color: white; 
 	width: 100%; 
 	height: 50px; 
@@ -62,10 +69,34 @@ button {
     text-align: center;
 	font-weight: bold;
 
+/**
+    padding: 10px 20px;
+    font-size: 26px;
+    background-color: #007bff;  /* #722F37; green; #e19510; 
+    color: #fff;
+    border: none;
+    cursor: pointer;
+    border-radius: 4px;
+    margin-top: 10px;
+	border-width: 80%;
+	width: width:200px;
+	height: 50px;
+	display: block;
+	white-space: normal;
+ 
+  color: white;
+  padding: 15px 32px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 26px;
+  cursor: pointer;
+  display: table-cell;  
+ /* vertical-align: middle; margin: 4px 2px; */
 }
 
 button:hover {
-    background-color: deepskyblue;  /* #e19510 */
+    background-color: deepskyblue;
 }
 
 h1 {
@@ -73,7 +104,7 @@ h1 {
     text-align: center;
 	width: 100%;
 	font-weight: bold;
-	background-color: #274c77; /* dimgray Old maroon, Last:black */
+	background-color: #274c77; /* Old brown maroon #76552b */
 	color: white; 
 	
 }
@@ -83,7 +114,7 @@ h1 {
     flex-wrap: wrap;
     gap: 10px;
     justify-content: center;
-	background-color: #274c77;
+	background-color: #cae9ff;
 	padding: 20px;
 
 }
@@ -93,20 +124,49 @@ h1 {
     overflow-y: auto;
 	max-height: -webkit-fill-available;   /* Old Value 1050px */
     /* max-height: fit-content;	*/		/* 600px;  Adjust as needed  work on this point*/ 
-	background-color: #cae9ff; /* Last:powderblue */
+	background-color: #cae9ff; 
 	font-size: 24px;
 	text-align: center;
 	font-weight: bold;
 	user-select: none;
 	-webkit-user-select: none;
+	padding: 20px	
 }
 
+/* Next Previous Buttons */
+
+ .btn-group button {
+  background-color: #274c77; 
+  border: 1px solid #274c77; /* bisque border */
+  color: white; /* White text */
+  padding: 10px 24px; /* Some padding */
+  cursor: pointer; /* Pointer/hand icon */
+  float: left; /* Float the buttons side by side */
+}
+
+.btn-group button:not(:last-child) {
+  border-right: none; /* Prevent double borders */
+}
+
+/* Clear floats (clearfix hack) */
+.btn-group:after {
+  content: "";
+  clear: both;
+  display: table;
+}
+
+/* Add a background color on hover */
+.btn-group button:hover {
+  background-color: deepskyblue;
+}
 
 
 /* Responsive design */
 @media screen and (max-width: 600px) {
     .container {
-        padding: 10px;
+        width: 100%;
+		padding: 10px;
+		height: 100vh;
     }
 }
 
@@ -122,12 +182,13 @@ footer {
     margin-top: 20px;
     font-size: 14px;
     color: #666;
+	padding: 1px
 }
 
 .container-home {
     max-width: 600px;
     margin: 10px auto;
-    background-color: powderblue; /* Old maroon */
+    background-color: #274c77; /* Old maroon */
 	/* background-color: #fff; */
     padding: 20px;
     border-radius: 8px;
@@ -220,62 +281,18 @@ th {
 
 /* Video Gallery */
 .video-container {
-	position: relative;
-	width: 100%;
-	padding-bottom: 56.25%; /* 16:9 Aspect Ratio */
-	height: 0;
-	overflow: hidden;
-	margin-bottom: 20px; /* Space between videos */
+            position: relative;
+            width: 100%;
+            padding-bottom: 56.25%; /* 16:9 Aspect Ratio */
+            height: 0;
+            overflow: hidden;
+            margin-bottom: 20px; /* Space between videos */
   }
 
-.video-container iframe {
-	position: absolute;
-	top: 0;
-	left: 0;
-	width: 100%;
-	height: 100%;
+        .video-container iframe {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
   }
-
-div {
-    height:100%;
-    width:100%;
-    border:5px solid black;
-}
-
-/* Next Previous Buttons */
-
-
-.btn-group {
-	display: flex;
-	justify-content: space-between;
-	align-items: center;
-	flex-wrap: nowrap;
-	margin-top: 20px;
-	gap: 5px;
-	}
-
-	.btn-group button {
-	  background-color: #274c77;
-	  border: 1px solid #274c77;
-	  color: white;
-	  padding: 10px 8px;
-	  font-size: 24px;
-	  cursor: pointer;
-	  flex: 1 1 33%;
-	  white-space: nowrap;
-	  min-width: 0;
-	  text-align: center;
-	}
-	
-	/* Add a background color on hover */
-	.btn-group button:hover {
-	  background-color: deepskyblue;
-	}
-
-	/* Optional: For extremely narrow screens, allow text wrapping if needed */
-	@media (max-width: 350px) {
-	  .btn-group button {
-		font-size: 12px;
-		padding: 8px 6px;
-	}
-}
