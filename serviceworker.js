@@ -99,6 +99,27 @@ self.addEventListener('install', event => {
     })());
 });
 
+
+// Added for Offline Support 20092025
+
+self.addEventListener('activate', event => {
+    event.waitUntil(
+        (async () => {
+            const cacheNames = await caches.keys();
+            await Promise.all(
+                cacheNames.map(name => {
+                    if (name !== CACHE_NAME) {
+                        return caches.delete(name);
+                    }
+                })
+            );
+            self.clients.claim(); // Take control immediately
+            console.log('Old caches cleared, service worker activated.');
+        })()
+    );
+});
+
+
 self.addEventListener('fetch', event => {
     const requestUrl = new URL(event.request.url);
 
