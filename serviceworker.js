@@ -1,4 +1,4 @@
-const CACHE_NAME = 'nityastotra-v1.0.0.1';
+const CACHE_NAME = 'nityastotra-v1.0.0.3';
 
 // Dynamically determine the base path of the service worker (e.g., "/stotra")
 const BASE_PATH = self.location.pathname.replace(/\/serviceworker\.js$/, '');
@@ -11,6 +11,8 @@ const RESOURCE_PATHS = [
     "/css/homestyles",
     "/js/script.js",
     "/favicon.ico",
+	"/home.html",
+	"/navratri-aarti.html",
     "/images/Annapurna-Devi.jpg",
     "/images/Shree-Lakshmi-Mata-Menu.jpg",
     "/images/Ashtak-Renuka-Mata-Menu.jpg",
@@ -44,6 +46,8 @@ const RESOURCE_PATHS = [
     "/images/screenshot-720x540.png",
     "/images/screenshot-1280x720.jpg",
     "/images/apple-touch-icon.png",
+	"/images/Navaratri-Aarti-Menu.webp",
+	"/images/Navaratri-Aarti-Menu.jpg",
     "/pages/annapurna-stotra.html",
     "/pages/datta-bhavsudharasa.html",
     "/pages/devi-ashtak.html",
@@ -60,22 +64,35 @@ const RESOURCE_PATHS = [
     "/pages/shreesukta.html",
     "/pages/hanumanchalisa.html",
     "/pages/ramraksha.html",
-    "/pages/offline.html"
+    "/pages/offline.html",
+	"/pages/navaratri-aarti1.html",
+	"/pages/navaratri-aarti2.html",
+	"/pages/navaratri-aarti3.html",
+	"/pages/navaratri-aarti4.html",
+	"/pages/navaratri-aarti5.html",
+	"/pages/navaratri-aarti6.html",
+	"/pages/navaratri-aarti7.html",
+	"/pages/navaratri-aarti8.html",
+	"/pages/navaratri-aarti9.html",
+	"/pages/navaratri-aarti10.html",
+	"/pages/navaratri-aarti11.html",
+	"/pages/navaratri-aarti12.html",
+	"/pages/navaratri-aarti13.html",
+	"/pages/navaratri-aarti14.html"
+	
 ];
 
-// Prepend the base path to each resource
+// Prepend BASE_PATH to every resource
 const INITIAL_CACHED_RESOURCES = RESOURCE_PATHS.map(path => `${BASE_PATH}${path}`);
 
-const DONT_UPDATE_RESOURCES = [
-    '/videos/'
-];
+const DONT_UPDATE_RESOURCES = ['/videos/'];
 
 self.addEventListener('install', event => {
     event.waitUntil((async () => {
         try {
             const cache = await caches.open(CACHE_NAME);
             await cache.addAll(INITIAL_CACHED_RESOURCES);
-            console.log('Resources cached successfully.');
+            console.log('Resources cached successfully');
         } catch (error) {
             console.error('Failed to cache resources:', error);
         }
@@ -83,31 +100,42 @@ self.addEventListener('install', event => {
 });
 
 self.addEventListener('fetch', event => {
+    const requestUrl = new URL(event.request.url);
+
+    // Ignore non-HTTP(s) requests (e.g., chrome-extension://, file://, etc.)
+    if (requestUrl.protocol !== 'http:' && requestUrl.protocol !== 'https:') {
+        return;
+    }
+
     event.respondWith((async () => {
         const cache = await caches.open(CACHE_NAME);
         const cachedResponse = await cache.match(event.request);
+
         if (cachedResponse) {
             return cachedResponse;
-        } else {
-            try {
-                const fetchResponse = await fetch(event.request);
-                if (!event.request.url.includes('google-analytics') && !event.request.url.includes('browser-sync')) {
-                    cache.put(event.request, fetchResponse.clone());
-                }
-                return fetchResponse;
-            } catch (e) {
-                if (event.request.mode === 'navigate') {
-                    await rememberRequestedTip(event.request.url);
-                    return cache.match(`${BASE_PATH}/offline.html`);
-                }
+        }
+
+        try {
+            const fetchResponse = await fetch(event.request);
+            if (
+                event.request.method === 'GET' &&
+                !event.request.url.includes('google-analytics') &&
+                !event.request.url.includes('browser-sync')
+            ) {
+                cache.put(event.request, fetchResponse.clone());
+            }
+            return fetchResponse;
+        } catch (e) {
+            if (event.request.mode === 'navigate') {
+                await rememberRequestedTip(event.request.url);
+                return await cache.match(`${BASE_PATH}/offline.html`);
             }
         }
     })());
 });
 
 async function rememberRequestedTip(url) {
-    let tips = await localforage.getItem('bg-tips');
-    if (!tips) tips = [];
+    let tips = await localforage.getItem('bg-tips') || [];
     tips.push(url);
     await localforage.setItem('bg-tips', tips);
 }
@@ -120,14 +148,14 @@ self.addEventListener('sync', event => {
 
 async function backgroundSyncLoadTips() {
     const tips = await localforage.getItem('bg-tips');
-    if (!tips || !tips.length) return;
+    if (!tips || tips.length === 0) return;
 
     const cache = await caches.open(CACHE_NAME);
     await cache.addAll(tips);
 
-    registration.showNotification(`${tips.length} tips loaded in background`, {
-        icon: `${BASE_PATH}/images/icon-192x192.png`,
-        body: "Click to view",
+    registration.showNotification(`${tips.length} tips loaded`, {
+        icon: `${BASE_PATH}/images/icon-256x256.png`,
+        body: "Tap to view",
         data: tips[0]
     });
 
@@ -154,7 +182,7 @@ async function updateCachedContent() {
             const fetchResponse = await fetch(request);
             await cache.put(request, fetchResponse.clone());
         } catch (e) {
-            // Silent fail
+            // Fail silently
         }
     }
 }

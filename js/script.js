@@ -77,6 +77,54 @@ function goToDattaBhavsudharasaHome() {
      window.location.href = 'datta-bhavsudharasa.html';
 }
 
+// Chapter Next Previous link for Navratri Aarti 20092025
+
+function goToNavratriAartiHome() {
+     window.location.href = '../navratri-aarti.html';
+}
+function goToNavratriAartiPage1() {
+     window.location.href = 'navaratri-aarti1.html';
+}
+function goToNavratriAartiPage2() {
+     window.location.href = 'navaratri-aarti2.html';
+}
+function goToNavratriAartiPage3() {
+     window.location.href = 'navaratri-aarti3.html';
+}
+function goToNavratriAartiPage4() {
+     window.location.href = 'navaratri-aarti4.html';
+}
+function goToNavratriAartiPage5() {
+     window.location.href = 'navaratri-aarti5.html';
+}
+function goToNavratriAartiPage6() {
+     window.location.href = 'navaratri-aarti6.html';
+}
+function goToNavratriAartiPage7() {
+     window.location.href = 'navaratri-aarti7.html';
+}
+function goToNavratriAartiPage8() {
+     window.location.href = 'navaratri-aarti8.html';
+}
+function goToNavratriAartiPage9() {
+     window.location.href = 'navaratri-aarti9.html';
+}
+function goToNavratriAartiPage10() {
+     window.location.href = 'navaratri-aarti10.html';
+}
+function goToNavratriAartiPage11() {
+     window.location.href = 'navaratri-aarti11.html';
+}
+function goToNavratriAartiPage12() {
+     window.location.href = 'navaratri-aarti12.html';
+}
+function goToNavratriAartiPage13() {
+     window.location.href = 'navaratri-aarti13.html';
+}
+function goToNavratriAartiPage14() {
+     window.location.href = 'navaratri-aarti14.html';
+}
+
 // JavaScript to disable right-click context menu globally and on a specific section
 document.addEventListener('DOMContentLoaded', function() {
     // Disable right-click context menu globally
