@@ -1,5 +1,7 @@
 const CACHE_NAME = 'nityastotra-v1.0.0.3';
 
+importScripts('https://storage.googleapis.com/workbox-cdn/releases/5.1.2/workbox-sw.js');
+
 // Dynamically determine the base path of the service worker (e.g., "/stotra")
 const BASE_PATH = self.location.pathname.replace(/\/serviceworker\.js$/, '');
 
