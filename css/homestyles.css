@@ -2,7 +2,7 @@ body {
     font-family: Arial, sans-serif;
     margin: 0;
     padding: 0;
-    background-color: #cae9ff; /* Last: powderblue;*/
+    background-color: #7fcfff; /* Last: powderblue;*/
 }
 
 header {
@@ -28,7 +28,7 @@ nav.menu {
     justify-content: space-around; /*space-around; Last: space-between; flex-start*/
     padding: 20px;
 	flex-direction: row;
-    background-color: #cae9ff; /* #f4f4f4; Last: powderblue*/
+    background-color: #7fcfff; /* #f4f4f4; Last: powderblue*/
 }
 
 nav.menu .menu-item {

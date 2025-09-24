@@ -114,7 +114,7 @@ h1 {
     flex-wrap: wrap;
     gap: 10px;
     justify-content: center;
-	background-color: #cae9ff;
+	background-color: #7fcfff;  /*  Old Code : #cae9ff */
 	padding: 20px;
 
 }
@@ -124,7 +124,7 @@ h1 {
     overflow-y: auto;
 	max-height: -webkit-fill-available;   /* Old Value 1050px */
     /* max-height: fit-content;	*/		/* 600px;  Adjust as needed  work on this point*/ 
-	background-color: #cae9ff; 
+	background-color: #7fcfff; 
 	font-size: 24px;
 	text-align: center;
 	font-weight: bold;
@@ -226,7 +226,7 @@ footer {
 	max-width: 100%;
 	overflow-y: auto;
 	max-height: 750px;
-	background-color: #cae9ff;
+	background-color: #7fcfff;
 	font-size: 22px;
 	text-align: center;
 	font-weight: bold;
@@ -238,7 +238,7 @@ table {
 	border-collapse: collapse;
 	border-spacing: 0;
 	width: 100%;
-	border: 1px solid #cae9ff;
+	border: 1px solid #7fcfff;
 	font-weight: bold;
 }
 
