@@ -96,7 +96,8 @@ button {
 }
 
 button:hover {
-    background-color: deepskyblue;
+    background-color: #ffd343;  /* Last - deepskyblue */
+	color: black; 
 }
 
 h1 {
