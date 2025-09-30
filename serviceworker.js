@@ -1,4 +1,4 @@
-const CACHE_NAME = 'nityastotra-v1.0.0.3';
+const CACHE_NAME = 'nityastotra-v1.0.0.4';
 
 importScripts('https://storage.googleapis.com/workbox-cdn/releases/5.1.2/workbox-sw.js');
 
