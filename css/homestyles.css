@@ -34,7 +34,7 @@ nav.menu {
 nav.menu .menu-item {
     background-color: aliceblue;  /* Last it was white: floralwhite */
     border-radius: 10px;
-    box-shadow: 0 0 10px #00175a; /* 0 0 10px rgba(0, 0, 0, 0.1); Last:#a52a2a*/
+    box-shadow: 0 0 10px #080f26; /* 0 0 10px rgba(0, 0, 0, 0.1); Last:#a52a2a*/
     margin: 10px;
     text-align: center;
     flex: 1 1 calc(20% - 40px);
@@ -67,7 +67,7 @@ main .content {
 }
 
 footer {
-    background-color: #00175a; /* dimgray maroon, Last:black */
+    background-color: #080f26; /* dimgray maroon, Last:black */
     color: white;  
     padding: 20px 0;
     text-align: center;
