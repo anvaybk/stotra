@@ -56,7 +56,7 @@ window.dataLayer = window.dataLayer || [];
 
   header {
     text-align: center;
-    background: #00175a;
+    background: #080f26;
     padding: 1rem 1rem;
   }
 
@@ -129,7 +129,7 @@ window.dataLayer = window.dataLayer || [];
     background: white;
     border-radius: 10px;
     padding: 1rem;
-	box-shadow: 0 0 10px #00175a;
+	box-shadow: 0 0 10px #080f26;
     /* ORG -> box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1); */
     transition: transform 0.2s;
   }
@@ -147,14 +147,14 @@ window.dataLayer = window.dataLayer || [];
   }
 
   .menu-item span {
-    color: #00175a;
+    color: #080f26;
     font-size: 0.95rem;
     font-weight: 600;
     text-align: center;
   }
 
   footer {
-    background: #00175a;
+    background: #080f26;
     color: #fff;
     text-align: center;
     padding: 2rem 1rem;
@@ -201,11 +201,17 @@ window.dataLayer = window.dataLayer || [];
   
 </head>
 <script>
-   // Additional code for service worker
-	 if (typeof navigator.serviceWorker !== 'undefined') {
-         navigator.serviceWorker.register('serviceworker.js')
-         }
-  </script>	
+   // Additional code for service worker. Commented on 28042026
+	// if (typeof navigator.serviceWorker !== 'undefined') {
+  //     navigator.serviceWorker.register('serviceworker.js')
+  //    }
+ 
+   if ('serviceWorker' in navigator) {
+    navigator.serviceWorker.register('serviceworker.js')
+    .then(reg => console.log('Service Worker registered:', reg))
+    .catch(err => console.error('Service Worker registration failed:', err));
+}       
+</script>	
 
 <body oncontextmenu="return false;">
 	<div class="container-heading" oncontextmenu="return false;">
@@ -232,12 +238,12 @@ window.dataLayer = window.dataLayer || [];
 			
 			<a href="https://anvaybk.github.io/stotra/pages/ramraksha.html" class="menu-item">  
 				<img src="images/Ramraksha-Ramdev.jpg" alt="Ramraksha Stotra">
-				<span>  श्री रामरक्षा स्तोत्र </span>
+				<span> श्री रामरक्षा स्तोत्र </span>
 			</a> 
 
       <a href="https://anvaybk.github.io/stotra/pages/marutistotra.html" class="menu-item">  
 				<img src="images/Maruti-Stotra.webp" alt="Maruti Stotra"> 
-				<span>  श्री मारुती स्तोत्र</span>
+				<span> श्री मारुती स्तोत्र</span>
 			</a>
 						
 			<a href="https://anvaybk.github.io/stotra/pages/annapurna-stotra.html" class="menu-item">   

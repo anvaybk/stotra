@@ -1,221 +1,93 @@
-const CACHE_NAME = 'nityastotra-v1.0.0.4';
 
-importScripts('https://storage.googleapis.com/workbox-cdn/releases/5.1.2/workbox-sw.js');
+    // Based off of https://github.com/pwa-builder/PWABuilder/blob/main/docs/sw.js
 
-// Dynamically determine the base path of the service worker (e.g., "/stotra")
-const BASE_PATH = self.location.pathname.replace(/\/serviceworker\.js$/, '');
+    /*
+      Welcome to our basic Service Worker! This Service Worker offers a basic offline experience
+      while also being easily customizeable. You can add in your own code to implement the capabilities
+      listed below, or change anything else you would like.
 
-// List of resources relative to the base path
-const RESOURCE_PATHS = [
-    "/", 
-    "/index.html",
-    "/css/styles.css",
-    "/css/homestyles",
-    "/js/script.js",
-    "/favicon.ico",
-	"/home.html",
-	"/navratri-aarti.html",
-    "/images/Annapurna-Devi.jpg",
-    "/images/Shree-Lakshmi-Mata-Menu.jpg",
-    "/images/Ashtak-Renuka-Mata-Menu.jpg",
-    "/images/Shree-Mohini-Raj-Newasa.jpg",
-    "/images/Datta-Bhavsudharasa-Stotra.jpg",
-    "/images/Shree-Sukta-Tuljabhavani-Mata-Menu.jpg",
-    "/images/mahishasurmardini-Mata-Menu.jpg",
-    "/images/Dnyeshwar-Maharaj.jpg",
-    "/images/Durga-Devi-Menu.jpg",
-    "/images/Ganapati-Atharvashirsha-Menu.jpg",
-    "/images/Ghora-Kashtodharana-Menu.jpg",
-    "/images/Shiv-Tandav-Stotra.jpg",
-    "/images/Hanuman-Chalisa.jpg",
-    "/images/Ramraksha-Ramdev.jpg",	
-    "/images/favicon-16x16.png",  
-    "/images/favicon-32x32.png",
-    "/images/icon-48x48.png",
-    "/images/icon-72x72.png",
-    "/images/icon-96x96.png",
-    "/images/icon-128x128.png",
-    "/images/icon-144x144.png",
-    "/images/icon-152x152.png",
-    "/images/icon-192x192.png",
-    "/images/icon-256x256.png",
-    "/images/icon-384x384.png",
-    "/images/icon-512x512.png",
-    "/images/icon-1024x1024.png",
-    "/images/android-launchericon-512-512.png",
-    "/images/screenshot-400x858.png",
-    "/images/screenshot-540x720.png",
-    "/images/screenshot-720x540.png",
-    "/images/screenshot-1280x720.jpg",
-    "/images/apple-touch-icon.png",
-	"/images/Navaratri-Aarti-Menu.webp",
-	"/images/Navaratri-Aarti-Menu.jpg",
-	"/images/Maruti-Stotra.webp",
-    "/pages/annapurna-stotra.html",
-    "/pages/datta-bhavsudharasa.html",
-    "/pages/devi-ashtak.html",
-    "/pages/dnyaneshwari.html",
-    "/pages/durga-stotra.html",
-    "/pages/ganapati-atharvashirsha.html",
-    "/pages/ghora-kashtodharana.html",
-    "/pages/lakshmi-stotra.html",
-    "/pages/mahishasurmardini.html",
-    "/pages/shiv-tandav-stotra.html",
-    "/pages/mohiniraj-stotra.html",
-    "/pages/privacy-policy.html",
-    "/pages/terms-conditions.html",
-    "/pages/shreesukta.html",
-    "/pages/hanumanchalisa.html",
-    "/pages/ramraksha.html",
-	"/pages/marutistotra.html",
-    "/pages/offline.html",
-	"/pages/navaratri-aarti1.html",
-	"/pages/navaratri-aarti2.html",
-	"/pages/navaratri-aarti3.html",
-	"/pages/navaratri-aarti4.html",
-	"/pages/navaratri-aarti5.html",
-	"/pages/navaratri-aarti6.html",
-	"/pages/navaratri-aarti7.html",
-	"/pages/navaratri-aarti8.html",
-	"/pages/navaratri-aarti9.html",
-	"/pages/navaratri-aarti10.html",
-	"/pages/navaratri-aarti11.html",
-	"/pages/navaratri-aarti12.html",
-	"/pages/navaratri-aarti13.html",
-	"/pages/navaratri-aarti14.html"
-	
-];
 
-// Prepend BASE_PATH to every resource
-const INITIAL_CACHED_RESOURCES = RESOURCE_PATHS.map(path => `${BASE_PATH}${path}`);
+      Need an introduction to Service Workers? Check our docs here: https://docs.pwabuilder.com/#/home/sw-intro
+      Want to learn more about how our Service Worker generation works? Check our docs here: https://docs.pwabuilder.com/#/studio/existing-app?id=add-a-service-worker
 
-const DONT_UPDATE_RESOURCES = ['/videos/'];
+      Did you know that Service Workers offer many more capabilities than just offline? 
+        - Background Sync: https://microsoft.github.io/win-student-devs/#/30DaysOfPWA/advanced-capabilities/06
+        - Periodic Background Sync: https://web.dev/periodic-background-sync/
+        - Push Notifications: https://microsoft.github.io/win-student-devs/#/30DaysOfPWA/advanced-capabilities/07?id=push-notifications-on-the-web
+        - Badges: https://microsoft.github.io/win-student-devs/#/30DaysOfPWA/advanced-capabilities/07?id=application-badges
+    */
 
-self.addEventListener('install', event => {
-    event.waitUntil((async () => {
-        try {
-            const cache = await caches.open(CACHE_NAME);
-            await cache.addAll(INITIAL_CACHED_RESOURCES);
-            console.log('Resources cached successfully');
-        } catch (error) {
-            console.error('Failed to cache resources:', error);
+    const HOSTNAME_WHITELIST = [
+        self.location.hostname,
+        'fonts.gstatic.com',
+        'fonts.googleapis.com',
+        'cdn.jsdelivr.net'
+    ]
+
+    // The Util Function to hack URLs of intercepted requests
+    const getFixedUrl = (req) => {
+        var now = Date.now()
+        var url = new URL(req.url)
+
+        // 1. fixed http URL
+        // Just keep syncing with location.protocol
+        // fetch(httpURL) belongs to active mixed content.
+        // And fetch(httpRequest) is not supported yet.
+        url.protocol = self.location.protocol
+
+        // 2. add query for caching-busting.
+        // Github Pages served with Cache-Control: max-age=600
+        // max-age on mutable content is error-prone, with SW life of bugs can even extend.
+        // Until cache mode of Fetch API landed, we have to workaround cache-busting with query string.
+        // Cache-Control-Bug: https://bugs.chromium.org/p/chromium/issues/detail?id=453190
+        if (url.hostname === self.location.hostname) {
+            url.search += (url.search ? '&' : '?') + 'cache-bust=' + now
         }
-    })());
-});
-
-
-// Added for Offline Support 20092025
-
-self.addEventListener('activate', event => {
-    event.waitUntil(
-        (async () => {
-            const cacheNames = await caches.keys();
-            await Promise.all(
-                cacheNames.map(name => {
-                    if (name !== CACHE_NAME) {
-                        return caches.delete(name);
-                    }
-                })
-            );
-            self.clients.claim(); // Take control immediately
-            console.log('Old caches cleared, service worker activated.');
-        })()
-    );
-});
-
-
-self.addEventListener('fetch', event => {
-    const requestUrl = new URL(event.request.url);
-
-    // Ignore non-HTTP(s) requests (e.g., chrome-extension://, file://, etc.)
-    if (requestUrl.protocol !== 'http:' && requestUrl.protocol !== 'https:') {
-        return;
+        return url.href
     }
 
-    event.respondWith((async () => {
-        const cache = await caches.open(CACHE_NAME);
-        const cachedResponse = await cache.match(event.request);
+    /**
+     *  @Lifecycle Activate
+     *  New one activated when old isnt being used.
+     *
+     *  waitUntil(): activating ====> activated
+     */
+    self.addEventListener('activate', event => {
+      event.waitUntil(self.clients.claim())
+    })
 
-        if (cachedResponse) {
-            return cachedResponse;
-        }
+    /**
+     *  @Functional Fetch
+     *  All network requests are being intercepted here.
+     *
+     *  void respondWith(Promise<Response> r)
+     */
+    self.addEventListener('fetch', event => {
+    // Skip some of cross-origin requests, like those for Google Analytics.
+    if (HOSTNAME_WHITELIST.indexOf(new URL(event.request.url).hostname) > -1) {
+        // Stale-while-revalidate
+        // similar to HTTP's stale-while-revalidate: https://www.mnot.net/blog/2007/12/12/stale
+        // Upgrade from Jake's to Surma's: https://gist.github.com/surma/eb441223daaedf880801ad80006389f1
+        const cached = caches.match(event.request)
+        const fixedUrl = getFixedUrl(event.request)
+        const fetched = fetch(fixedUrl, { cache: 'no-store' })
+        const fetchedCopy = fetched.then(resp => resp.clone())
 
-        try {
-            const fetchResponse = await fetch(event.request);
-            if (
-                event.request.method === 'GET' &&
-                !event.request.url.includes('google-analytics') &&
-                !event.request.url.includes('browser-sync')
-            ) {
-                cache.put(event.request, fetchResponse.clone());
-            }
-            return fetchResponse;
-        } catch (e) {
-            if (event.request.mode === 'navigate') {
-                await rememberRequestedTip(event.request.url);
-                return await cache.match(`${BASE_PATH}/offline.html`);
-            }
-        }
-    })());
-});
+        // Call respondWith() with whatever we get first.
+        // If the fetch fails (e.g disconnected), wait for the cache.
+        // If there’s nothing in cache, wait for the fetch.
+        // If neither yields a response, return offline pages.
+        event.respondWith(
+        Promise.race([fetched.catch(_ => cached), cached])
+            .then(resp => resp || fetched)
+            .catch(_ => { /* eat any errors */ })
+        )
 
-async function rememberRequestedTip(url) {
-    let tips = await localforage.getItem('bg-tips') || [];
-    tips.push(url);
-    await localforage.setItem('bg-tips', tips);
-}
-
-self.addEventListener('sync', event => {
-    if (event.tag === 'bg-load-tip') {
-        event.waitUntil(backgroundSyncLoadTips());
+        // Update the cache with the version we fetched (only for ok status)
+        event.waitUntil(
+        Promise.all([fetchedCopy, caches.open("pwa-cache")])
+            .then(([response, cache]) => response.ok && cache.put(event.request, response))
+            .catch(_ => { /* eat any errors */ })
+        )
     }
-});
-
-async function backgroundSyncLoadTips() {
-    const tips = await localforage.getItem('bg-tips');
-    if (!tips || tips.length === 0) return;
-
-    const cache = await caches.open(CACHE_NAME);
-    await cache.addAll(tips);
-
-    registration.showNotification(`${tips.length} tips loaded`, {
-        icon: `${BASE_PATH}/images/icon-256x256.png`,
-        body: "Tap to view",
-        data: tips[0]
-    });
-
-    await localforage.removeItem('bg-tips');
-}
-
-self.addEventListener('notificationclick', event => {
-    event.notification.close();
-    clients.openWindow(event.notification.data);
-});
-
-self.addEventListener('periodicsync', event => {
-    if (event.tag === 'update-cached-content') {
-        event.waitUntil(updateCachedContent());
-    }
-});
-
-async function updateCachedContent() {
-    const requests = await findCacheEntriesToBeRefreshed();
-    const cache = await caches.open(CACHE_NAME);
-
-    for (const request of requests) {
-        try {
-            const fetchResponse = await fetch(request);
-            await cache.put(request, fetchResponse.clone());
-        } catch (e) {
-            // Fail silently
-        }
-    }
-}
-
-async function findCacheEntriesToBeRefreshed() {
-    const cache = await caches.open(CACHE_NAME);
-    const requests = await cache.keys();
-    return requests.filter(request => {
-        return !DONT_UPDATE_RESOURCES.some(pattern => request.url.includes(pattern));
-    });
-}
+    })
