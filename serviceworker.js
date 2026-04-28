@@ -1,93 +1,113 @@
+// serviceworker.js
 
-    // Based off of https://github.com/pwa-builder/PWABuilder/blob/main/docs/sw.js
+const CACHE_NAME = 'nitya-stotra-cache-v1';
 
-    /*
-      Welcome to our basic Service Worker! This Service Worker offers a basic offline experience
-      while also being easily customizeable. You can add in your own code to implement the capabilities
-      listed below, or change anything else you would like.
+// ===== Assets to precache =====
+const PRECACHE_ASSETS = [
+    '/',  // index.html
+    '/index.html',
+    '/manifest.json',
+    '/images/android-launchericon-512-512.png',
+    '/images/apple-touch-icon.png',
+    '/images/favicon-32x32.png',
+    '/images/favicon-16x16.png',
+    '/images/favicon.ico',
+    '/css/styles.css',
+    '/css/homestyles.css',
+    '/js/script.js',
 
+    // Add all menu images you have
+    '/images/Ganapati-Atharvashirsha-Menu.jpg',
+    '/images/Hanuman-Chalisa.jpg',
+    '/images/Ramraksha-Ramdev.jpg',
+    '/images/Maruti-Stotra.webp',
+    '/images/Annapurna-Devi.jpg',
+    '/images/Navaratri-Aarti-Menu.webp',
+    '/images/Shiv-Tandav-Stotra.jpg',
+    '/images/Ashtak-Renuka-Mata-Menu.jpg',
+    '/images/Shree-Sukta-Tuljabhavani-Mata-Menu.jpg',
+    '/images/Shree-Lakshmi-Mata-Menu.jpg',
+    '/images/Durga-Devi-Menu.jpg',
+    '/images/Shree-Mohini-Raj-Newasa.jpg',
+    '/images/mahishasurmardini-Mata-Menu.jpg',
+    '/images/Dnyeshwar-Maharaj.jpg',
+    '/images/Ghora-Kashtodharana-Menu.jpg',
+    '/images/Datta-Bhavsudharasa-Stotra.jpg'
+];
 
-      Need an introduction to Service Workers? Check our docs here: https://docs.pwabuilder.com/#/home/sw-intro
-      Want to learn more about how our Service Worker generation works? Check our docs here: https://docs.pwabuilder.com/#/studio/existing-app?id=add-a-service-worker
+// ===== Utility =====
+const HOSTNAME_WHITELIST = [
+    self.location.hostname,
+    'fonts.gstatic.com',
+    'fonts.googleapis.com',
+    'cdn.jsdelivr.net'
+];
 
-      Did you know that Service Workers offer many more capabilities than just offline? 
-        - Background Sync: https://microsoft.github.io/win-student-devs/#/30DaysOfPWA/advanced-capabilities/06
-        - Periodic Background Sync: https://web.dev/periodic-background-sync/
-        - Push Notifications: https://microsoft.github.io/win-student-devs/#/30DaysOfPWA/advanced-capabilities/07?id=push-notifications-on-the-web
-        - Badges: https://microsoft.github.io/win-student-devs/#/30DaysOfPWA/advanced-capabilities/07?id=application-badges
-    */
-
-    const HOSTNAME_WHITELIST = [
-        self.location.hostname,
-        'fonts.gstatic.com',
-        'fonts.googleapis.com',
-        'cdn.jsdelivr.net'
-    ]
-
-    // The Util Function to hack URLs of intercepted requests
-    const getFixedUrl = (req) => {
-        var now = Date.now()
-        var url = new URL(req.url)
-
-        // 1. fixed http URL
-        // Just keep syncing with location.protocol
-        // fetch(httpURL) belongs to active mixed content.
-        // And fetch(httpRequest) is not supported yet.
-        url.protocol = self.location.protocol
-
-        // 2. add query for caching-busting.
-        // Github Pages served with Cache-Control: max-age=600
-        // max-age on mutable content is error-prone, with SW life of bugs can even extend.
-        // Until cache mode of Fetch API landed, we have to workaround cache-busting with query string.
-        // Cache-Control-Bug: https://bugs.chromium.org/p/chromium/issues/detail?id=453190
-        if (url.hostname === self.location.hostname) {
-            url.search += (url.search ? '&' : '?') + 'cache-bust=' + now
-        }
-        return url.href
+const getFixedUrl = (req) => {
+    const now = Date.now();
+    const url = new URL(req.url);
+    url.protocol = self.location.protocol;
+    if (url.hostname === self.location.hostname) {
+        url.search += (url.search ? '&' : '?') + 'cache-bust=' + now;
     }
+    return url.href;
+};
 
-    /**
-     *  @Lifecycle Activate
-     *  New one activated when old isnt being used.
-     *
-     *  waitUntil(): activating ====> activated
-     */
-    self.addEventListener('activate', event => {
-      event.waitUntil(self.clients.claim())
-    })
+// ===== Lifecycle Events =====
+self.addEventListener('install', event => {
+    console.log('[SW] Install');
+    event.waitUntil(
+        caches.open(CACHE_NAME).then(cache => {
+            console.log('[SW] Precaching assets');
+            return cache.addAll(PRECACHE_ASSETS);
+        })
+    );
+    self.skipWaiting();
+});
 
-    /**
-     *  @Functional Fetch
-     *  All network requests are being intercepted here.
-     *
-     *  void respondWith(Promise<Response> r)
-     */
-    self.addEventListener('fetch', event => {
-    // Skip some of cross-origin requests, like those for Google Analytics.
-    if (HOSTNAME_WHITELIST.indexOf(new URL(event.request.url).hostname) > -1) {
-        // Stale-while-revalidate
-        // similar to HTTP's stale-while-revalidate: https://www.mnot.net/blog/2007/12/12/stale
-        // Upgrade from Jake's to Surma's: https://gist.github.com/surma/eb441223daaedf880801ad80006389f1
-        const cached = caches.match(event.request)
-        const fixedUrl = getFixedUrl(event.request)
-        const fetched = fetch(fixedUrl, { cache: 'no-store' })
-        const fetchedCopy = fetched.then(resp => resp.clone())
+self.addEventListener('activate', event => {
+    console.log('[SW] Activate');
+    // Clean up old caches
+    event.waitUntil(
+        caches.keys().then(keys =>
+            Promise.all(keys.map(key => {
+                if (key !== CACHE_NAME) {
+                    console.log('[SW] Deleting old cache:', key);
+                    return caches.delete(key);
+                }
+            }))
+        )
+    );
+    self.clients.claim();
+});
 
-        // Call respondWith() with whatever we get first.
-        // If the fetch fails (e.g disconnected), wait for the cache.
-        // If there’s nothing in cache, wait for the fetch.
-        // If neither yields a response, return offline pages.
+// ===== Fetch Handling =====
+self.addEventListener('fetch', event => {
+    const url = new URL(event.request.url);
+
+    if (HOSTNAME_WHITELIST.includes(url.hostname)) {
+        const cached = caches.match(event.request);
+        const fetched = fetch(getFixedUrl(event.request), { cache: 'no-store' });
+        const fetchedCopy = fetched.then(resp => resp.clone());
+
         event.respondWith(
-        Promise.race([fetched.catch(_ => cached), cached])
-            .then(resp => resp || fetched)
-            .catch(_ => { /* eat any errors */ })
-        )
+            Promise.race([fetched.catch(_ => cached), cached])
+                .then(resp => resp || fetched)
+                .catch(_ => new Response('Offline', { status: 503, statusText: 'Offline' }))
+        );
 
-        // Update the cache with the version we fetched (only for ok status)
         event.waitUntil(
-        Promise.all([fetchedCopy, caches.open("pwa-cache")])
-            .then(([response, cache]) => response.ok && cache.put(event.request, response))
-            .catch(_ => { /* eat any errors */ })
-        )
+            Promise.all([fetchedCopy, caches.open(CACHE_NAME)])
+                .then(([response, cache]) => response.ok && cache.put(event.request, response))
+                .catch(_ => { /* ignore errors */ })
+        );
     }
-    })
+});
+
+// ===== Messaging =====
+self.addEventListener('message', event => {
+    console.log('[SW] Message received:', event.data);
+    if (event.source) {
+        event.source.postMessage({ received: true, original: event.data });
+    }
+});
