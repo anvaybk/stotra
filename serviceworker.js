@@ -1,11 +1,12 @@
-// serviceworker.js
+// Last updated on 29042026
 
-importScripts('https://storage.googleapis.com/workbox-cdn/releases/5.1.2/workbox-sw.js');
+const CACHE_NAME = 'stotra-v1.0.0.5';
 
-// ===== Cache Names =====
-const CACHE_NAME = 'nitya-stotra-cache-v1';
-const OFFLINE_CACHE = 'nitya-offline-cache-v1';
-const PRECACHE_ASSETS = [
+// Dynamically determine the base path (e.g., "/stotra")
+const BASE_PATH = self.location.pathname.replace(/\/serviceworker\.js$/, '');
+
+const RESOURCE_PATHS = [
+    // your existing list here...
   '/', '/index.html', '/manifest.json',
   '/images/android-launchericon-512-512.png',
   '/images/apple-touch-icon.png',
@@ -33,257 +34,116 @@ const PRECACHE_ASSETS = [
   '/images/Ghora-Kashtodharana-Menu.jpg',
   '/images/Datta-Bhavsudharasa-Stotra.jpg'
 ];
-const OFFLINE_FALLBACK_PAGE = '/offline.html';
 
-const HOSTNAME_WHITELIST = [
-  self.location.hostname,
-  'fonts.gstatic.com',
-  'fonts.googleapis.com',
-  'cdn.jsdelivr.net'
-];
+// Prepend BASE_PATH to every resource
+const INITIAL_CACHED_RESOURCES = RESOURCE_PATHS.map(path => `${BASE_PATH}${path}`);
 
-// ===== IndexedDB Queue for Background Sync =====
-const DB_NAME = 'nitya-sync-db';
-const STORE_NAME = 'request-queue';
+const DONT_UPDATE_RESOURCES = ['/videos/'];
 
-function openDB() {
-  return new Promise((resolve, reject) => {
-    const request = indexedDB.open(DB_NAME, 1);
-    request.onupgradeneeded = () => {
-      const db = request.result;
-      if (!db.objectStoreNames.contains(STORE_NAME)) {
-        db.createObjectStore(STORE_NAME, { keyPath: 'id', autoIncrement: true });
-      }
-    };
-    request.onsuccess = () => resolve(request.result);
-    request.onerror = () => reject(request.error);
-  });
-}
-
-async function addRequestToQueue(url, options) {
-  const db = await openDB();
-  const tx = db.transaction(STORE_NAME, 'readwrite');
-  tx.objectStore(STORE_NAME).add({ url, options });
-  return tx.complete;
-}
-
-async function getQueuedRequests() {
-  const db = await openDB();
-  return new Promise((resolve, reject) => {
-    const tx = db.transaction(STORE_NAME, 'readonly');
-    const store = tx.objectStore(STORE_NAME);
-    const all = store.getAll();
-    all.onsuccess = () => resolve(all.result);
-    all.onerror = () => reject(all.error);
-  });
-}
-
-async function removeQueuedRequest(id) {
-  const db = await openDB();
-  const tx = db.transaction(STORE_NAME, 'readwrite');
-  tx.objectStore(STORE_NAME).delete(id);
-  return tx.complete;
-}
-
-// ===== Utility =====
-const getFixedUrl = (req) => {
-  const now = Date.now();
-  const url = new URL(req.url);
-  url.protocol = self.location.protocol;
-  if (url.hostname === self.location.hostname) {
-    url.search += (url.search ? '&' : '?') + 'cache-bust=' + now;
-  }
-  return url.href;
-};
-
-// ===== Install Event =====
-self.addEventListener('install', (event) => {
-  console.log('[SW] Install');
-  event.waitUntil(
-    caches.open(CACHE_NAME).then((cache) => cache.addAll(PRECACHE_ASSETS))
-  );
-  event.waitUntil(
-    caches.open(OFFLINE_CACHE).then((cache) => cache.add(OFFLINE_FALLBACK_PAGE))
-  );
-  self.skipWaiting();
+self.addEventListener('install', event => {
+    event.waitUntil((async () => {
+        try {
+            const cache = await caches.open(CACHE_NAME);
+            await cache.addAll(INITIAL_CACHED_RESOURCES);
+            console.log('Resources cached successfully');
+        } catch (error) {
+            console.error('Failed to cache resources:', error);
+        }
+    })());
 });
 
-// ===== Activate Event =====
-self.addEventListener('activate', (event) => {
-  console.log('[SW] Activate');
-  event.waitUntil(
-    caches.keys().then((keys) =>
-      Promise.all(
-        keys.map((key) => {
-          if (![CACHE_NAME, OFFLINE_CACHE].includes(key)) {
-            console.log('[SW] Deleting old cache:', key);
-            return caches.delete(key);
-          }
-        })
-      )
-    )
-  );
-  self.clients.claim();
-});
+self.addEventListener('fetch', event => {
+    const requestUrl = new URL(event.request.url);
 
-// ===== Fetch Handling with Full Offline Support =====
-self.addEventListener('fetch', (event) => {
-  const url = new URL(event.request.url);
+    // Ignore non-HTTP(s) requests (e.g., chrome-extension://, file://, etc.)
+    if (requestUrl.protocol !== 'http:' && requestUrl.protocol !== 'https:') {
+        return;
+    }
 
-  // Handle POST requests offline via background sync
-  if (event.request.method === 'POST' && HOSTNAME_WHITELIST.includes(url.hostname)) {
-    event.respondWith(
-      fetch(event.request.clone())
-        .catch(async () => {
-          const clonedReq = event.request.clone();
-          let body = null;
-          try { body = await clonedReq.json(); } catch { body = null; }
-
-          await addRequestToQueue(clonedReq.url, {
-            method: 'POST',
-            headers: [...clonedReq.headers],
-            body: body ? JSON.stringify(body) : null
-          });
-
-          if ('sync' in self.registration) {
-            self.registration.sync.register('sync-new-data');
-          }
-
-          return new Response(JSON.stringify({ message: 'Request queued for sync.' }), {
-            status: 200,
-            headers: { 'Content-Type': 'application/json' }
-          });
-        })
-    );
-    return;
-  }
-
-  // Navigation requests (pages)
-  if (event.request.mode === 'navigate') {
     event.respondWith((async () => {
-      try {
-        return await fetch(event.request);
-      } catch {
         const cache = await caches.open(CACHE_NAME);
         const cachedResponse = await cache.match(event.request);
-        if (cachedResponse) return cachedResponse;
 
-        const offlineCache = await caches.open(OFFLINE_CACHE);
-        return offlineCache.match(OFFLINE_FALLBACK_PAGE);
-      }
-    })());
-    return;
-  }
+        if (cachedResponse) {
+            return cachedResponse;
+        }
 
-  // Other requests (CSS, JS, images, API)
-  if (HOSTNAME_WHITELIST.includes(url.hostname)) {
-    event.respondWith(
-      caches.match(event.request).then((cached) => {
-        return fetch(getFixedUrl(event.request), { cache: 'no-store' })
-          .then((networkResp) => {
-            if (networkResp.ok) {
-              caches.open(CACHE_NAME).then((cache) => cache.put(event.request, networkResp.clone()));
+        try {
+            const fetchResponse = await fetch(event.request);
+            if (
+                event.request.method === 'GET' &&
+                !event.request.url.includes('google-analytics') &&
+                !event.request.url.includes('browser-sync')
+            ) {
+                cache.put(event.request, fetchResponse.clone());
             }
-            return networkResp;
-          })
-          .catch(() => cached || new Response('Offline', { status: 503, statusText: 'Offline' }));
-      })
-    );
-  }
+            return fetchResponse;
+        } catch (e) {
+            if (event.request.mode === 'navigate') {
+                await rememberRequestedTip(event.request.url);
+                return await cache.match(`${BASE_PATH}/offline.html`);
+            }
+        }
+    })());
 });
 
-// ===== Background Sync =====
-self.addEventListener('sync', (event) => {
-  if (event.tag === 'sync-new-data') {
-    event.waitUntil(processQueue());
-  }
-});
+async function rememberRequestedTip(url) {
+    let tips = await localforage.getItem('bg-tips') || [];
+    tips.push(url);
+    await localforage.setItem('bg-tips', tips);
+}
 
-async function processQueue() {
-  const requests = await getQueuedRequests();
-  for (const req of requests) {
-    try {
-      const response = await fetch(req.url, req.options);
-      if (response.ok) {
-        await removeQueuedRequest(req.id);
-        console.log('[SW] Successfully synced request:', req.url);
-      }
-    } catch {
-      console.error('[SW] Failed to sync request, will retry later:', req.url);
+self.addEventListener('sync', event => {
+    if (event.tag === 'bg-load-tip') {
+        event.waitUntil(backgroundSyncLoadTips());
     }
-  }
+});
+
+async function backgroundSyncLoadTips() {
+    const tips = await localforage.getItem('bg-tips');
+    if (!tips || tips.length === 0) return;
+
+    const cache = await caches.open(CACHE_NAME);
+    await cache.addAll(tips);
+
+    registration.showNotification(`${tips.length} tips loaded`, {
+        icon: `${BASE_PATH}/images/icon-256x256.png`,
+        body: "Tap to view",
+        data: tips[0]
+    });
+
+    await localforage.removeItem('bg-tips');
 }
 
-// ===== Push Notifications =====
-self.addEventListener('push', (event) => {
-  const data = event.data ? event.data.json() : { title: 'Nitya Stotra', body: 'New content available!' };
-  event.waitUntil(
-    self.registration.showNotification(data.title, {
-      body: data.body,
-      icon: '/images/android-launchericon-512-512.png',
-      badge: '/images/favicon-32x32.png',
-      data: data.url || '/'
-    })
-  );
+self.addEventListener('notificationclick', event => {
+    event.notification.close();
+    clients.openWindow(event.notification.data);
 });
 
-self.addEventListener('notificationclick', (event) => {
-  event.notification.close();
-  event.waitUntil(
-    clients.matchAll({ type: 'window', includeUncontrolled: true }).then((clientList) => {
-      const urlToOpen = new URL(event.notification.data, self.location.origin).href;
-      for (const client of clientList) {
-        if (client.url === urlToOpen && 'focus' in client) return client.focus();
-      }
-      if (clients.openWindow) return clients.openWindow(urlToOpen);
-    })
-  );
+self.addEventListener('periodicsync', event => {
+    if (event.tag === 'update-cached-content') {
+        event.waitUntil(updateCachedContent());
+    }
 });
 
-// ===== Periodic Sync (Experimental) =====
-self.addEventListener('periodicsync', (event) => {
-  if (event.tag === 'refresh-content') {
-    event.waitUntil(refreshContent());
-  }
-});
+async function updateCachedContent() {
+    const requests = await findCacheEntriesToBeRefreshed();
+    const cache = await caches.open(CACHE_NAME);
 
-async function refreshContent() {
-  try {
-    const response = await fetch('/api/latest-stotras');
-    const data = await response.json();
-    console.log('[SW] Periodic sync fetched latest stotras:', data);
-  } catch {
-    console.error('[SW] Periodic sync failed');
-  }
-});
-
-// ===== Workbox Caching Strategies =====
-if (workbox) {
-  workbox.routing.registerRoute(
-    /\.(?:png|jpg|jpeg|webp|svg)$/,
-    new workbox.strategies.CacheFirst({
-      cacheName: 'nitya-images',
-      plugins: [
-        new workbox.expiration.ExpirationPlugin({ maxEntries: 60, maxAgeSeconds: 30 * 24 * 60 * 60 })
-      ]
-    })
-  );
-
-  workbox.routing.registerRoute(
-    new RegExp('/api/.*'),
-    new workbox.strategies.NetworkFirst({
-      cacheName: 'nitya-api-cache',
-      networkTimeoutSeconds: 3,
-      plugins: [
-        new workbox.expiration.ExpirationPlugin({ maxEntries: 50, maxAgeSeconds: 5 * 60 })
-      ]
-    })
-  );
-
-  if (workbox.navigationPreload.isSupported()) workbox.navigationPreload.enable();
+    for (const request of requests) {
+        try {
+            const fetchResponse = await fetch(request);
+            await cache.put(request, fetchResponse.clone());
+        } catch (e) {
+            // Fail silently
+        }
+    }
 }
 
-// ===== Message Handling =====
-self.addEventListener('message', (event) => {
-  if (event.data && event.data.type === 'SKIP_WAITING') self.skipWaiting();
-});
+async function findCacheEntriesToBeRefreshed() {
+    const cache = await caches.open(CACHE_NAME);
+    const requests = await cache.keys();
+    return requests.filter(request => {
+        return !DONT_UPDATE_RESOURCES.some(pattern => request.url.includes(pattern));
+    });
+}
