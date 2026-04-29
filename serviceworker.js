@@ -42,7 +42,7 @@ const HOSTNAME_WHITELIST = [
   'cdn.jsdelivr.net'
 ];
 
-// ===== IndexedDB Queue =====
+// ===== IndexedDB Queue for Background Sync =====
 const DB_NAME = 'nitya-sync-db';
 const STORE_NAME = 'request-queue';
 
@@ -126,11 +126,11 @@ self.addEventListener('activate', (event) => {
   self.clients.claim();
 });
 
-// ===== Fetch Handling =====
+// ===== Fetch Handling with Full Offline Support =====
 self.addEventListener('fetch', (event) => {
   const url = new URL(event.request.url);
 
-  // Intercept POST requests to queue them offline
+  // Handle POST requests offline via background sync
   if (event.request.method === 'POST' && HOSTNAME_WHITELIST.includes(url.hostname)) {
     event.respondWith(
       fetch(event.request.clone())
@@ -162,13 +162,14 @@ self.addEventListener('fetch', (event) => {
   if (event.request.mode === 'navigate') {
     event.respondWith((async () => {
       try {
-        const preloadResp = await event.preloadResponse;
-        if (preloadResp) return preloadResp;
-
         return await fetch(event.request);
       } catch {
-        const cache = await caches.open(OFFLINE_CACHE);
-        return await cache.match(OFFLINE_FALLBACK_PAGE);
+        const cache = await caches.open(CACHE_NAME);
+        const cachedResponse = await cache.match(event.request);
+        if (cachedResponse) return cachedResponse;
+
+        const offlineCache = await caches.open(OFFLINE_CACHE);
+        return offlineCache.match(OFFLINE_FALLBACK_PAGE);
       }
     })());
     return;
@@ -177,16 +178,16 @@ self.addEventListener('fetch', (event) => {
   // Other requests (CSS, JS, images, API)
   if (HOSTNAME_WHITELIST.includes(url.hostname)) {
     event.respondWith(
-      caches.match(event.request).then((cached) =>
-        fetch(getFixedUrl(event.request), { cache: 'no-store' })
+      caches.match(event.request).then((cached) => {
+        return fetch(getFixedUrl(event.request), { cache: 'no-store' })
           .then((networkResp) => {
             if (networkResp.ok) {
               caches.open(CACHE_NAME).then((cache) => cache.put(event.request, networkResp.clone()));
             }
             return networkResp;
           })
-          .catch(() => cached || new Response('Offline', { status: 503, statusText: 'Offline' }))
-      )
+          .catch(() => cached || new Response('Offline', { status: 503, statusText: 'Offline' }));
+      })
     );
   }
 });
@@ -207,7 +208,7 @@ async function processQueue() {
         await removeQueuedRequest(req.id);
         console.log('[SW] Successfully synced request:', req.url);
       }
-    } catch (err) {
+    } catch {
       console.error('[SW] Failed to sync request, will retry later:', req.url);
     }
   }
@@ -251,11 +252,10 @@ async function refreshContent() {
     const response = await fetch('/api/latest-stotras');
     const data = await response.json();
     console.log('[SW] Periodic sync fetched latest stotras:', data);
-    // Store in IndexedDB or cache if needed
-  } catch (err) {
-    console.error('[SW] Periodic sync failed:', err);
+  } catch {
+    console.error('[SW] Periodic sync failed');
   }
-}
+});
 
 // ===== Workbox Caching Strategies =====
 if (workbox) {
@@ -285,6 +285,5 @@ if (workbox) {
 
 // ===== Message Handling =====
 self.addEventListener('message', (event) => {
-  console.log('[SW] Message received:', event.data);
   if (event.data && event.data.type === 'SKIP_WAITING') self.skipWaiting();
 });
