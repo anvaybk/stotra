@@ -14,7 +14,7 @@ body {
 	padding-bottom: env(safe-area-inset-bottom);
 	padding-left: env(safe-area-inset-left);
 	padding-right: env(safe-area-inset-right);
-   
+    box-sizing: border-box;
 }
 
 .container {
@@ -202,7 +202,7 @@ footer {
 .social-icons {
 	display: flex;
 	justify-content: center;
-	gap: 15px;     //20px;
+	gap: 15px;     /* 20px; */
 	list-style: none;
 	padding: 0;
 }
@@ -217,7 +217,7 @@ footer {
 }
 
 .social-icons img {
-	width: 35px;  //40px
+	width: 35px;  /* 40px */
 	height: 35px;
 }
 
@@ -296,4 +296,5 @@ th {
             left: 0;
             width: 100%;
             height: 100%;
-  }
+        }
+}        

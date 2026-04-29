@@ -76,6 +76,12 @@ function goToGhoraKashtodharanaHome() {
 function goToDattaBhavsudharasaHome() {
      window.location.href = 'datta-bhavsudharasa.html';
 }
+function goToMarutiStotraHome() {
+     window.location.href = 'marutistotra.html';
+}
+function goToHanumanChalisaHome() {
+     window.location.href = 'hanumanchalisa.html';
+}
 
 // Chapter Next Previous link for Navratri Aarti 20092025
 
