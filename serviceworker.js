@@ -40,6 +40,10 @@ const HOSTNAME_WHITELIST = [
     self.location.hostname,
     'fonts.gstatic.com',
     'fonts.googleapis.com',
+	'*.youtube.googleapis.com',
+	'*.play.google.com',
+	'*.googletagmanager.com',
+	'drive.google.com',
     'cdn.jsdelivr.net'
 ];
 
