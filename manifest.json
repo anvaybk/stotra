@@ -145,24 +145,6 @@
     "window-controls-overlay"
   ],
   "handle_links": "auto",
-   "scope_extensions": [
-  "*.youtube.googleapis.com": {
-    "type": "content_script",
-    "origin": "*.youtube.googleapis.com"
-  },
-  "drive.google.com": {
-    "type": "origin_extension",
-    "origin": "https://drive.google.com"
-  },
-  "*.play.google.com": {
-    "type": "content_script",
-    "origin": "*.play.google.com"
-  },
-  "*.googletagmanager.com": {
-    "type": "content_script",
-    "origin": "*.googletagmanager.com"
-  }
-],
   "shortcuts": [
     {
       "name": "Lakshmi Stotra",
