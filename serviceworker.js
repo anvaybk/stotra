@@ -147,3 +147,29 @@ async function findCacheEntriesToBeRefreshed() {
         return !DONT_UPDATE_RESOURCES.some(pattern => request.url.includes(pattern));
     });
 }
+
+// ===== Push Notifications =====
+self.addEventListener('push', (event) => {
+  const data = event.data ? event.data.json() : { title: 'Nitya Stotra', body: 'New Update available!' };
+  event.waitUntil(
+    self.registration.showNotification(data.title, {
+      body: data.body,
+      icon: '/images/android-launchericon-512-512.png',
+      badge: '/images/favicon-32x32.png',
+      data: data.url || '/'
+    })
+  );
+});
+
+self.addEventListener('notificationclick', (event) => {
+  event.notification.close();
+  event.waitUntil(
+    clients.matchAll({ type: 'window', includeUncontrolled: true }).then((clientList) => {
+      const urlToOpen = new URL(event.notification.data, self.location.origin).href;
+      for (const client of clientList) {
+        if (client.url === urlToOpen && 'focus' in client) return client.focus();
+      }
+      if (clients.openWindow) return clients.openWindow(urlToOpen);
+    })
+  );
+});
