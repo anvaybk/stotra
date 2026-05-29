@@ -1,5 +1,25 @@
 /* styles.css */
 
+/*
+.header {
+    position: fixed;
+    top: env(safe-area-inset-top);
+    left: 0;
+    right: 0;
+}
+*/
+
+/* Fixed header */
+.header {
+    padding-top: env(safe-area-inset-top);
+}
+
+/* Fixed bottom nav */
+.bottom-nav {
+    padding-bottom: env(safe-area-inset-bottom);
+}
+
+
 /* Basic styling */
 body {
     font-family: Arial, sans-serif;

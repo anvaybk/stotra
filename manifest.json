@@ -9,19 +9,24 @@
   "scope": "/",
   "description": "Nitya Stotra Sangrah is a spiritual app offering a curated collection of timeless hymns for daily worship, including Devi Ashtakshari, Mahishasura Mardini, Shri Suktam, and more. Ideal for those seeking to bring devotional practice into their daily routine.",
   "version": "1.0.0.5",
-  "theme_color": "#0c1a41",
+  "theme_color": "#080f26",
    "developer": {
     "name": "Anvay B Kulkarni",
     "url": "https://anvaybk.github.io/stotra/"
   },
   "icons": [
     {
-      "src": "images/favicon-16x16.png",
+      "src": "images/icon-16x16.png",
       "type": "image/png",
       "sizes": "16x16"
     },
     {
-      "src": "images/favicon-32x32.png",
+      "src": "images/icon-24x24.png",
+      "type": "image/png",
+      "sizes": "24x24"
+    },
+    {
+      "src": "images/icon-32x32.png",
       "type": "image/png",
       "sizes": "32x32"
     },
@@ -29,6 +34,16 @@
       "src": "images/icon-48x48.png",
       "type": "image/png",
       "sizes": "48x48"
+    },
+    {
+      "src": "images/icon-50x50.png",
+      "type": "image/png",
+      "sizes": "50x50"
+    },
+    {
+      "src": "images/icon-64x64.png",
+      "type": "image/png",
+      "sizes": "64x64"
     },
     {
       "src": "images/icon-72x72.png",
@@ -56,6 +71,16 @@
       "sizes": "152x152"
     },
     {
+      "src": "images/icon-167x167.png",
+      "type": "image/png",
+      "sizes": "167x167"
+    },
+    {
+      "src": "images/icon-180x180.png",
+      "type": "image/png",
+      "sizes": "180x180"
+    },
+    {
       "src": "images/icon-192x192.png",
       "type": "image/png",
       "purpose": "maskable",
@@ -67,9 +92,19 @@
       "sizes": "256x256"
     },
     {
+      "src": "images/icon-300x620.png",
+      "type": "image/png",
+      "sizes": "300x620"
+    },
+    {
       "src": "images/icon-384x384.png",
       "type": "image/png",
       "sizes": "384x384"
+    },
+    {
+      "src": "images/icon-493x847.png",
+      "type": "image/png",
+      "sizes": "493x847"
     },
     {
       "src": "images/icon-512x512.png",
@@ -77,15 +112,55 @@
       "sizes": "512x512"
     },
     {
-      "src": "images/icon-1024x1024.png",
+      "src": "images/icon-540x720.png",
+      "type": "image/png",
+      "sizes": "540x720"
+    },
+    {
+      "src": "images/icon-720x540.png",
+      "type": "image/png",
+      "sizes": "720x540"
+    },
+    {
+      "src": "images/icon-784x984.png",
+      "type": "image/png",
+      "sizes": "784x984"
+    },
+    {
+      "src": "images/icon-800x600.png",
+      "type": "image/png",
+      "sizes": "800x600"
+    },
+    {
+      "src": "images/icon-1024x768.png",
+      "type": "image/png",
+      "sizes": "1024x768"
+    },
+    {
+      "src": "images/icon-1021x1024.png",
+      "type": "image/png",
+      "sizes": "1021x1024"
+    },
+    {
+      "src": "images/icon-1224x924.png",
       "type": "image/png",
       "purpose": "any",
-      "sizes": "1024x1024"
+      "sizes": "1224x924"
+    },
+    {
+      "src": "images/icon-1294x924.png",
+      "type": "image/png",
+      "sizes": "1294x924"
+    },
+    {
+      "src": "images/icon-1578x855.png",
+      "type": "image/png",
+      "sizes": "1578x855"
     }
   ],
   "screenshots": [
     {
-      "src": "images/screenshot-1280x720.png",
+      "src": "images/icon-1280x720.png",
       "type": "image/png",
       "sizes": "1280x720",
       "platform": "wide"
@@ -145,24 +220,6 @@
     "window-controls-overlay"
   ],
   "handle_links": "auto",
-  "scope_extensions": {
-  "*.youtube.googleapis.com": {
-    "type": "content_script",
-    "origin": "*.youtube.googleapis.com"
-  },
-  "drive.google.com": {
-    "type": "origin_extension",
-    "origin": "https://drive.google.com"
-  },
-  "*.play.google.com": {
-    "type": "content_script",
-    "origin": "*.play.google.com"
-  },
-  "*.googletagmanager.com": {
-    "type": "content_script",
-    "origin": "*.googletagmanager.com"
-  }
-}
   "shortcuts": [
     {
       "name": "Lakshmi Stotra",
@@ -170,7 +227,7 @@
         "src": "images/icon-96x96.png",
         "type": "image/png",
         "sizes": "96x96",
-        "description": "Lakshmi Stotra Vachan"
+        "description": "Lakshmi Stotra"
      }
   ],
   "iarc_rating_id": "5ee1bc30-7372-472a-8884-87699b63d6cb",

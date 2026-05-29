@@ -1,175 +1,394 @@
-// Last updated on 29042026
+// ===============================
+// NITYA STOTRA SERVICE WORKER
+// ===============================
 
-const CACHE_NAME = 'stotra-v1.0.0.5';
+// Last updated: 29-05-2026
 
-// Dynamically determine the base path (e.g., "/stotra")
+const VERSION = '29052026-1005';
+const CACHE_NAME = `nityastotra-${VERSION}`;
+
+// Detect base path dynamically
 const BASE_PATH = self.location.pathname.replace(/\/serviceworker\.js$/, '');
 
+// ===============================
+// FILES TO PRE-CACHE
+// ===============================
+
 const RESOURCE_PATHS = [
-    // your existing list here...
-  '/', '/index.html', '/manifest.json',
-  '/images/android-launchericon-512-512.png',
-  '/images/apple-touch-icon.png',
-  '/images/favicon-32x32.png',
-  '/images/favicon-16x16.png',
-  '/images/favicon.ico',
-  '/css/styles.css',
-  '/css/homestyles.css',
-  '/js/script.js',
-  // Menu Images
-  '/images/Ganapati-Atharvashirsha-Menu.jpg',
-  '/images/Hanuman-Chalisa.jpg',
-  '/images/Ramraksha-Ramdev.jpg',
-  '/images/Maruti-Stotra.webp',
-  '/images/Annapurna-Devi.jpg',
-  '/images/Navaratri-Aarti-Menu.webp',
-  '/images/Shiv-Tandav-Stotra.jpg',
-  '/images/Ashtak-Renuka-Mata-Menu.jpg',
-  '/images/Shree-Sukta-Tuljabhavani-Mata-Menu.jpg',
-  '/images/Shree-Lakshmi-Mata-Menu.jpg',
-  '/images/Durga-Devi-Menu.jpg',
-  '/images/Shree-Mohini-Raj-Newasa.jpg',
-  '/images/mahishasurmardini-Mata-Menu.jpg',
-  '/images/Dnyeshwar-Maharaj.jpg',
-  '/images/Ghora-Kashtodharana-Menu.jpg',
-  '/images/Datta-Bhavsudharasa-Stotra.jpg'
+    '/',
+    '/index.html',
+    '/offline.html',
+    '/manifest.json',
+
+    // CSS
+    '/css/style.css',
+
+    // JS
+    '/js/app.js',
+
+    // Icons
+    '/images/icon-192x192.png',
+    '/images/icon-256x256.png'
 ];
 
-// Prepend BASE_PATH to every resource
-const INITIAL_CACHED_RESOURCES = RESOURCE_PATHS.map(path => `${BASE_PATH}${path}`);
+// Convert to full paths
+const INITIAL_CACHED_RESOURCES =
+    RESOURCE_PATHS.map(path => `${BASE_PATH}${path}`);
 
-const DONT_UPDATE_RESOURCES = ['/videos/'];
+// Files/folders excluded from auto-refresh
+const DONT_UPDATE_RESOURCES = [
+    '/videos/'
+];
+
+// ===============================
+// INSTALL
+// ===============================
 
 self.addEventListener('install', event => {
+
+    console.log('Service Worker Installing...');
+
+    // Activate immediately
+    self.skipWaiting();
+
     event.waitUntil((async () => {
+
         try {
+
             const cache = await caches.open(CACHE_NAME);
+
             await cache.addAll(INITIAL_CACHED_RESOURCES);
-            console.log('Resources cached successfully');
+
+            console.log('Pre-cache completed');
+
         } catch (error) {
-            console.error('Failed to cache resources:', error);
+
+            console.error('Pre-cache failed:', error);
+
         }
+
     })());
+
 });
 
-self.addEventListener('fetch', event => {
-    const requestUrl = new URL(event.request.url);
+// ===============================
+// ACTIVATE
+// ===============================
 
-    // Ignore non-HTTP(s) requests (e.g., chrome-extension://, file://, etc.)
-    if (requestUrl.protocol !== 'http:' && requestUrl.protocol !== 'https:') {
+self.addEventListener('activate', event => {
+
+    console.log('Service Worker Activating...');
+
+    event.waitUntil((async () => {
+
+        // Remove old caches
+        const cacheNames = await caches.keys();
+
+        await Promise.all(
+            cacheNames.map(cache => {
+
+                if (cache !== CACHE_NAME) {
+
+                    console.log('Deleting old cache:', cache);
+
+                    return caches.delete(cache);
+                }
+
+            })
+        );
+
+        // Take control immediately
+        await clients.claim();
+
+        console.log('Service Worker Activated');
+
+    })());
+
+});
+
+// ===============================
+// FETCH
+// ===============================
+
+self.addEventListener('fetch', event => {
+
+    // Only GET requests
+    if (event.request.method !== 'GET') {
         return;
     }
 
+    const requestUrl = new URL(event.request.url);
+
+    // Ignore unsupported protocols
+    if (
+        requestUrl.protocol !== 'http:' &&
+        requestUrl.protocol !== 'https:'
+    ) {
+        return;
+    }
+
+    // Ignore analytics
+    if (
+        requestUrl.href.includes('google-analytics') ||
+        requestUrl.href.includes('browser-sync')
+    ) {
+        return;
+    }
+
+    const acceptHeader =
+        event.request.headers.get('accept') || '';
+
+    const isHTML =
+        acceptHeader.includes('text/html');
+
     event.respondWith((async () => {
+
         const cache = await caches.open(CACHE_NAME);
-        const cachedResponse = await cache.match(event.request);
+
+        // ==========================================
+        // NETWORK FIRST FOR HTML PAGES
+        // ==========================================
+
+        if (isHTML) {
+
+            try {
+
+                // Try latest from network
+                const networkResponse =
+                    await fetch(event.request);
+
+                // Save latest version
+                cache.put(
+                    event.request,
+                    networkResponse.clone()
+                );
+
+                return networkResponse;
+
+            } catch (error) {
+
+                console.log('Offline HTML fallback');
+
+                // Offline fallback
+                return (
+                    await cache.match(event.request)
+                ) || (
+                    await cache.match(`${BASE_PATH}/offline.html`)
+                );
+            }
+        }
+
+        // ==========================================
+        // CACHE FIRST + BACKGROUND UPDATE
+        // FOR STATIC FILES
+        // ==========================================
+
+        const cachedResponse =
+            await cache.match(event.request);
 
         if (cachedResponse) {
+
+            // Update in background
+            fetch(event.request)
+                .then(networkResponse => {
+
+                    if (
+                        networkResponse &&
+                        networkResponse.status === 200
+                    ) {
+
+                        cache.put(
+                            event.request,
+                            networkResponse.clone()
+                        );
+                    }
+
+                })
+                .catch(() => {
+                    // Ignore update failures
+                });
+
             return cachedResponse;
         }
 
+        // ==========================================
+        // NOT IN CACHE → FETCH FROM NETWORK
+        // ==========================================
+
         try {
-            const fetchResponse = await fetch(event.request);
+
+            const networkResponse =
+                await fetch(event.request);
+
+            // Cache valid responses
             if (
-                event.request.method === 'GET' &&
-                !event.request.url.includes('google-analytics') &&
-                !event.request.url.includes('browser-sync')
+                networkResponse &&
+                networkResponse.status === 200
             ) {
-                cache.put(event.request, fetchResponse.clone());
+
+                const shouldCache =
+                    !DONT_UPDATE_RESOURCES.some(pattern =>
+                        event.request.url.includes(pattern)
+                    );
+
+                if (shouldCache) {
+
+                    cache.put(
+                        event.request,
+                        networkResponse.clone()
+                    );
+                }
             }
-            return fetchResponse;
-        } catch (e) {
+
+            return networkResponse;
+
+        } catch (error) {
+
+            console.log('Fetch failed:', event.request.url);
+
+            // Optional image fallback
+            if (
+                event.request.destination === 'image'
+            ) {
+                return cache.match(
+                    `${BASE_PATH}/images/offline-image.png`
+                );
+            }
+
+            // Offline page for navigation
             if (event.request.mode === 'navigate') {
-                await rememberRequestedTip(event.request.url);
-                return await cache.match(`${BASE_PATH}/offline.html`);
+
+                return cache.match(
+                    `${BASE_PATH}/offline.html`
+                );
             }
+
+            return new Response('Offline', {
+                status: 503,
+                statusText: 'Offline'
+            });
         }
+
     })());
+
 });
 
-async function rememberRequestedTip(url) {
-    let tips = await localforage.getItem('bg-tips') || [];
-    tips.push(url);
-    await localforage.setItem('bg-tips', tips);
-}
+// ===============================
+// BACKGROUND SYNC
+// ===============================
 
 self.addEventListener('sync', event => {
+
     if (event.tag === 'bg-load-tip') {
-        event.waitUntil(backgroundSyncLoadTips());
+
+        event.waitUntil(
+            backgroundSyncLoadTips()
+        );
     }
+
 });
+
+// ===============================
+// LOAD SAVED PAGES
+// ===============================
 
 async function backgroundSyncLoadTips() {
-    const tips = await localforage.getItem('bg-tips');
-    if (!tips || tips.length === 0) return;
 
-    const cache = await caches.open(CACHE_NAME);
-    await cache.addAll(tips);
+    try {
 
-    registration.showNotification(`${tips.length} tips loaded`, {
-        icon: `${BASE_PATH}/images/icon-256x256.png`,
-        body: "Tap to view",
-        data: tips[0]
-    });
+        const tips =
+            await localforage.getItem('bg-tips');
 
-    await localforage.removeItem('bg-tips');
+        if (!tips || tips.length === 0) {
+            return;
+        }
+
+        const cache =
+            await caches.open(CACHE_NAME);
+
+        await cache.addAll(tips);
+
+        registration.showNotification(
+            `${tips.length} tips loaded`,
+            {
+                icon: `${BASE_PATH}/images/icon-256x256.png`,
+                body: 'Tap to view',
+                data: tips[0]
+            }
+        );
+
+        await localforage.removeItem('bg-tips');
+
+    } catch (error) {
+
+        console.error(
+            'Background sync failed:',
+            error
+        );
+    }
+
 }
 
+// ===============================
+// NOTIFICATION CLICK
+// ===============================
+
 self.addEventListener('notificationclick', event => {
+
     event.notification.close();
-    clients.openWindow(event.notification.data);
+
+    event.waitUntil(
+        clients.openWindow(
+            event.notification.data
+        )
+    );
+
 });
 
-self.addEventListener('periodicsync', event => {
-    if (event.tag === 'update-cached-content') {
-        event.waitUntil(updateCachedContent());
-    }
-});
+// ===============================
+// OPTIONAL MANUAL CACHE REFRESH
+// ===============================
 
-async function updateCachedContent() {
-    const requests = await findCacheEntriesToBeRefreshed();
-    const cache = await caches.open(CACHE_NAME);
+async function refreshCachedContent() {
+
+    const cache =
+        await caches.open(CACHE_NAME);
+
+    const requests =
+        await cache.keys();
 
     for (const request of requests) {
+
         try {
-            const fetchResponse = await fetch(request);
-            await cache.put(request, fetchResponse.clone());
-        } catch (e) {
-            // Fail silently
+
+            const shouldUpdate =
+                !DONT_UPDATE_RESOURCES.some(pattern =>
+                    request.url.includes(pattern)
+                );
+
+            if (!shouldUpdate) {
+                continue;
+            }
+
+            const response =
+                await fetch(request);
+
+            if (response.status === 200) {
+
+                await cache.put(
+                    request,
+                    response.clone()
+                );
+            }
+
+        } catch (error) {
+
+            console.log(
+                'Refresh failed:',
+                request.url
+            );
         }
     }
 }
 
-async function findCacheEntriesToBeRefreshed() {
-    const cache = await caches.open(CACHE_NAME);
-    const requests = await cache.keys();
-    return requests.filter(request => {
-        return !DONT_UPDATE_RESOURCES.some(pattern => request.url.includes(pattern));
-    });
-}
-
-// ===== Push Notifications =====
-self.addEventListener('push', (event) => {
-  const data = event.data ? event.data.json() : { title: 'Nitya Stotra', body: 'New Update available!' };
-  event.waitUntil(
-    self.registration.showNotification(data.title, {
-      body: data.body,
-      icon: '/images/android-launchericon-512-512.png',
-      badge: '/images/favicon-32x32.png',
-      data: data.url || '/'
-    })
-  );
-});
-
-self.addEventListener('notificationclick', (event) => {
-  event.notification.close();
-  event.waitUntil(
-    clients.matchAll({ type: 'window', includeUncontrolled: true }).then((clientList) => {
-      const urlToOpen = new URL(event.notification.data, self.location.origin).href;
-      for (const client of clientList) {
-        if (client.url === urlToOpen && 'focus' in client) return client.focus();
-      }
-      if (clients.openWindow) return clients.openWindow(urlToOpen);
-    })
-  );
-});
+console.log('Service Worker Loaded');
