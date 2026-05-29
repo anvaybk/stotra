@@ -160,12 +160,6 @@
   ],
   "screenshots": [
     {
-      "src": "images/icon-1280x720.png",
-      "type": "image/png",
-      "sizes": "1280x720",
-      "platform": "wide"
-    },
-    {
       "src": "images/screenshot-540x720.png",
       "type": "image/png",
       "sizes": "540x720",
