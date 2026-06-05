@@ -2,9 +2,9 @@
 // NITYA STOTRA SERVICE WORKER
 // ===============================
 
-// Last updated: 31-05-2026
+// Last updated: 05-06-2026
 
-const VERSION = '29052026-1006';
+const VERSION = '05062026-1006';
 const CACHE_NAME = `nityastotra-${VERSION}`;
 
 // Detect base path dynamically
