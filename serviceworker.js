@@ -4,7 +4,7 @@
 
 // Last updated: 01-08-2026
 
-const VERSION = '18082026-1007';
+const VERSION = '180820261-1007';
 const CACHE_NAME = `nityastotra-${VERSION}`;
 
 // Detect base path dynamically

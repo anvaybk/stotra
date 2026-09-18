@@ -147,7 +147,7 @@ function goToAartiSangrahPage3() {
      window.location.href = 'asangrah-mahalaxmi-aarti.html';
 }
 function goToAartiSangrahPage4() {
-     window.location.href = 'asangrah-devichi-aarti.html';
+     window.location.href = 'asangrah-dattachi-aarti.html';
 }
 
 
