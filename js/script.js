@@ -131,6 +131,26 @@ function goToNavratriAartiPage14() {
      window.location.href = 'navaratri-aarti14.html';
 }
 
+
+// Chapter Next Previous link for Aarti Sangrah 18092026
+
+function goToAartiSangrahHome() {
+     window.location.href = '../aarti-sangrah.html';
+}
+function goToAartiSangrahPage1() {
+     window.location.href = 'asangrah-ganapati-aarti.html';
+}
+function goToAartiSangrahPage2() {
+     window.location.href = 'asangrah-devichi-aarti.html';
+}
+function goToAartiSangrahPage3() {
+     window.location.href = 'asangrah-mahalaxmi-aarti.html';
+}
+function goToAartiSangrahPage4() {
+     window.location.href = 'asangrah-devichi-aarti.html';
+}
+
+
 // JavaScript to disable right-click context menu globally and on a specific section
 document.addEventListener('DOMContentLoaded', function() {
     // Disable right-click context menu globally
