@@ -132,7 +132,7 @@ function goToNavratriAartiPage14() {
 }
 
 
-// Chapter Next Previous link for Aarti Sangrah 18092026
+// Chapter Next Previous link for Aarti Sangrah 18102026
 
 function goToAartiSangrahHome() {
      window.location.href = '../aarti-sangrah.html';
@@ -144,10 +144,22 @@ function goToAartiSangrahPage2() {
      window.location.href = 'asangrah-devichi-aarti.html';
 }
 function goToAartiSangrahPage3() {
-     window.location.href = 'asangrah-mahalaxmi-aarti.html';
+     window.location.href = 'asangrah-aarti-vishnumurti-jai-mahalaya-shakti.html';
 }
 function goToAartiSangrahPage4() {
      window.location.href = 'asangrah-dattachi-aarti.html';
+}
+function goToAartiSangrahPage5() {
+     window.location.href = 'asangrah-shankarachi-aarti.html';
+}
+function goToAartiSangrahPage6() {
+     window.location.href = 'asangrah-vitthalachi-aarti.html';
+}
+function goToAartiSangrahPage6() {
+     window.location.href = 'asangrah-mahalaxmi-aarti.html';
+}
+function goToAartiSangrahPage7() {
+     window.location.href = 'asangrah-amma-bhagvan-aarti.html';
 }
 
 
