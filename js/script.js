@@ -155,11 +155,14 @@ function goToAartiSangrahPage5() {
 function goToAartiSangrahPage6() {
      window.location.href = 'asangrah-vitthalachi-aarti.html';
 }
-function goToAartiSangrahPage6() {
+function goToAartiSangrahPage7() {
      window.location.href = 'asangrah-mahalaxmi-aarti.html';
 }
-function goToAartiSangrahPage7() {
+function goToAartiSangrahPage8() {
      window.location.href = 'asangrah-amma-bhagvan-aarti.html';
+}
+function goToAartiSangrahPage9() {
+     window.location.href = 'asangrah-gayatri-devi-aarti.html';
 }
 
 
